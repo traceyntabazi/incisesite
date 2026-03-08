@@ -364,6 +364,26 @@ const ProductsPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Microcement & Decorative Coating Products | INCISE East Africa"
+        description="Explore INCISE's complete range of microcement, microtopping, metallic finishes, Wallcrete, Cemwash, patio systems, and color hardener. Premium cement-based wall and floor finishes manufactured in Uganda."
+        canonical="https://incisesite.lovable.app/products"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "INCISE Microcement & Decorative Coating Products",
+          description: "Complete range of microcement and cement-based decorative wall and floor finishes by INCISE.",
+          numberOfItems: 6,
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Microtopping — Seamless Microcement Finish", url: "https://incisesite.lovable.app/products#microtopping" },
+            { "@type": "ListItem", position: 2, name: "Metallic Finish — Decorative Wall Coating", url: "https://incisesite.lovable.app/products#metallic" },
+            { "@type": "ListItem", position: 3, name: "Wallcrete — Cement-Based Wall Finish", url: "https://incisesite.lovable.app/products#wallcrete" },
+            { "@type": "ListItem", position: 4, name: "Cemwash — Mineral Wall Coating", url: "https://incisesite.lovable.app/products#cemwash" },
+            { "@type": "ListItem", position: 5, name: "Patio System — Outdoor Floor Coating", url: "https://incisesite.lovable.app/products#patio" },
+            { "@type": "ListItem", position: 6, name: "Color Hardener — Industrial Floor Finish", url: "https://incisesite.lovable.app/products#hardener" },
+          ],
+        }}
+      />
       <Navbar />
 
       {/* Page Hero */}

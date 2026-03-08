@@ -56,6 +56,26 @@ const testimonials = [
 const AcademyPage = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Microcement Applicator Training & Certification | INCISE Academy"
+        description="Join East Africa's premier microcement applicator training programme. 12-week certification covering microtopping, metallic finishes, and cement-based coatings. 700+ applicators trained in Uganda and Kenya."
+        canonical="https://incisesite.lovable.app/academy"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "EducationalOrganization",
+          name: "INCISE Academy",
+          description: "East Africa's premier microcement and decorative coatings applicator training and certification programme.",
+          areaServed: ["Uganda", "Kenya"],
+          courseMode: "onsite",
+          hasCourse: {
+            "@type": "Course",
+            name: "INCISE Certified Applicator Programme",
+            description: "12-week microcement and decorative coatings application certification covering substrate science, microtopping technique, metallic finishes, and quality assurance.",
+            timeRequired: "P12W",
+            provider: { "@type": "Organization", name: "INCISE Uganda Limited" },
+          },
+        }}
+      />
       <Navbar />
 
       {/* Hero */}

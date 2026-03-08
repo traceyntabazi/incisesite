@@ -59,6 +59,11 @@ const GalleryPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Microcement Project Gallery | INCISE East Africa"
+        description="Browse 300+ completed microcement, microtopping, and decorative coating projects across Uganda and Kenya. Residential, commercial, and hospitality surface finishes by INCISE."
+        canonical="https://incisesite.lovable.app/gallery"
+      />
       <Navbar />
 
       {/* Featured Project Hero */}

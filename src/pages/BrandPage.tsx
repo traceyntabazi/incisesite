@@ -58,6 +58,23 @@ const principles = [
 const BrandPage = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="About INCISE — Microcement Manufacturer | Founded in Uganda 2020"
+        description="INCISE is East Africa's authority on premium microcement and cement-based decorative coatings. Founded in Kampala in 2020, we've trained 700+ applicators and served 400+ clients across Uganda and Kenya."
+        canonical="https://incisesite.lovable.app/about"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          mainEntity: {
+            "@type": "Organization",
+            name: "INCISE Uganda Limited",
+            description: "East Africa's leading manufacturer of microcement and cement-based decorative wall and floor coatings.",
+            foundingDate: "2020",
+            foundingLocation: { "@type": "Place", name: "Kampala, Uganda" },
+            numberOfEmployees: { "@type": "QuantitativeValue", value: "700+", unitText: "trained applicators" },
+          },
+        }}
+      />
       <Navbar />
 
       {/* Hero */}
