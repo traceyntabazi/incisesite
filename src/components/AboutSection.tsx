@@ -77,14 +77,14 @@ const AboutSection = () => {
           >
             <p className="label-text mb-4">WHAT IS INCISE?</p>
             <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground mb-6 leading-tight" style={{ fontWeight: 300 }}>
-              We don't coat surfaces. We give them{" "}
-              <span className="italic text-gradient-gold">a voice.</span>
+              East Africa's leading microcement &amp; decorative{" "}
+              <span className="italic text-gradient-gold">coatings manufacturer.</span>
             </h2>
             <p className="text-secondary-foreground leading-[1.95] mb-10 font-body" style={{ fontWeight: 300 }}>
-              We wanted to create a brand identity that was representative of the creative
-              process; a creative process that requires experimentation which calls for trust
-              and design discipline. Every surface we complete is an argument that premium
-              can come from East Africa.
+              INCISE manufactures premium microcement, microtopping, and cement-based
+              surface finishes — seamless wall and floor coatings engineered for East Africa's
+              climate. Every surface we complete is an argument that premium decorative
+              coatings can come from East Africa.
             </p>
 
             <div className="space-y-8">

@@ -24,8 +24,8 @@ const Footer = () => {
               className="h-7 w-auto brightness-0 invert mb-4"
             />
             <p className="text-white/60 text-[0.88rem] font-body leading-[1.95]" style={{ fontWeight: 300 }}>
-              Premium decorative wall and floor coatings, manufactured in Uganda
-              for East Africa.
+              East Africa's leading manufacturer of microcement, microtopping, and premium
+              cement-based wall and floor finishes. Made in Uganda.
             </p>
             <p className="font-display italic text-white/40 text-sm mt-3">
               A Life Full of Design Secrets.
