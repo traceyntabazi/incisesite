@@ -12,6 +12,8 @@ interface Location {
   city: string;
   country: string;
   countryCode: string;
+  lat: number;
+  lng: number;
   description?: string;
   products?: string[];
 }
