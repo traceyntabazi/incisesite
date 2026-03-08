@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Globe, ArrowRight, Building2, Users, Package } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import LocationMap from "@/components/LocationMap";
 
 interface Location {
   id: string;
