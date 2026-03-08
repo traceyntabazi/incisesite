@@ -3,19 +3,19 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const testimonials = [
   {
-    quote: "Working with INCISE for the past four years has been fantastic. Their materials are always high quality and give me the exact natural aesthetic I envision for my clients' spaces.",
-    name: "Eva Balungi",
-    role: "Interior Designer, Balungi Uganda",
-  },
-  {
-    quote: "On behalf of our parish, we are deeply grateful. The team spent days and sleepless nights to make a perfect product. What they did to our Sanctuary is beyond what we imagined.",
+    quote: "The team spent days and sleepless nights in the church to deliver a perfect product. It exceeds all expectations. A truly professional team.",
     name: "Rev. Fr. Edward Muwanga",
-    role: "Parish Priest, St Charles Lwanga Parish",
+    role: "Parish Priest · St Charles Lwanga",
   },
   {
-    quote: "INCISE is the only local supplier I trust to consistently match what I specify on paper. They understand architecture, not just product — that makes all the difference on a real project.",
+    quote: "INCISE is leading the decorative surface space in Uganda. My clients now specify microtopping by name. That's what market authority looks like.",
+    name: "Eva Balungi",
+    role: "Interior Designer · Kampala",
+  },
+  {
+    quote: "Working with INCISE is straightforward. They have a system. They follow it. And the results speak for themselves every time.",
     name: "Granius",
-    role: "CEO, Graite Interiors",
+    role: "CEO · Graite Interiors",
   },
 ];
 
@@ -23,11 +23,11 @@ const TestimonialsSection = () => {
   const [active, setActive] = useState(0);
 
   return (
-    <section className="section-padding">
+    <section className="section-padding bg-dark">
       <div className="max-w-4xl mx-auto text-center">
         <p className="label-text mb-4">CLIENT STORIES</p>
-        <h2 className="font-display text-3xl md:text-4xl text-foreground mb-16">
-          Those who chose <span className="italic text-gradient-gold">INCISE.</span>
+        <h2 className="font-display text-3xl md:text-4xl text-white mb-16" style={{ fontWeight: 300 }}>
+          Those who chose <span className="italic" style={{ color: "hsl(35 38% 58%)" }}>INCISE.</span>
         </h2>
 
         <AnimatePresence mode="wait">
@@ -38,13 +38,14 @@ const TestimonialsSection = () => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
           >
-            <blockquote className="font-display text-xl md:text-2xl lg:text-3xl text-foreground leading-relaxed italic mb-8">
-              "{testimonials[active].quote}"
+            <p className="font-display text-4xl text-white/20 leading-none mb-4">"</p>
+            <blockquote className="font-display text-xl md:text-2xl lg:text-3xl text-white leading-relaxed italic mb-8" style={{ fontWeight: 300 }}>
+              {testimonials[active].quote}
             </blockquote>
-            <p className="text-foreground font-body font-semibold">
+            <p className="text-white font-body" style={{ fontWeight: 400 }}>
               {testimonials[active].name}
             </p>
-            <p className="text-muted-foreground text-sm font-body">
+            <p className="text-white/50 text-sm font-body" style={{ fontWeight: 300 }}>
               {testimonials[active].role}
             </p>
           </motion.div>
@@ -55,8 +56,8 @@ const TestimonialsSection = () => {
             <button
               key={i}
               onClick={() => setActive(i)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                active === i ? "bg-primary w-6" : "bg-muted-foreground/30"
+              className={`w-2 h-2 transition-all ${
+                active === i ? "bg-primary w-6" : "bg-white/20"
               }`}
             />
           ))}

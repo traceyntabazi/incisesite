@@ -22,14 +22,13 @@ const features = [
 const AboutSection = () => {
   return (
     <section className="section-padding">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1400px] mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-center">
-          {/* Image */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.85, ease: [0,0,.2,1] }}
             className="relative"
           >
             <img
@@ -42,19 +41,18 @@ const AboutSection = () => {
             </div>
           </motion.div>
 
-          {/* Content */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.85, ease: [0,0,.2,1] }}
           >
             <p className="label-text mb-4">WHAT IS INCISE?</p>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground mb-6 leading-tight">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground mb-6 leading-tight" style={{ fontWeight: 300 }}>
               We don't coat surfaces. We give them{" "}
               <span className="italic text-gradient-gold">a voice.</span>
             </h2>
-            <p className="text-secondary-foreground leading-relaxed mb-10 font-body">
+            <p className="text-secondary-foreground leading-[1.95] mb-10 font-body" style={{ fontWeight: 300 }}>
               If you've ever walked into a space and felt something — a calm, a
               weight, an elegance you couldn't quite name — chances are the
               surface design was doing the work. INCISE creates that feeling.
@@ -65,10 +63,10 @@ const AboutSection = () => {
                 <div key={i} className="flex gap-4">
                   <span className="text-2xl flex-shrink-0">{f.icon}</span>
                   <div>
-                    <h3 className="text-foreground font-body font-semibold mb-1">
+                    <h3 className="text-foreground font-body mb-1" style={{ fontWeight: 500 }}>
                       {f.title}
                     </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed font-body">
+                    <p className="text-muted-foreground text-[0.88rem] leading-[1.95] font-body" style={{ fontWeight: 300 }}>
                       {f.desc}
                     </p>
                   </div>

@@ -25,7 +25,7 @@ const ProjectGallery = () => {
 
   return (
     <section id="projects" className="section-padding">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1400px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -33,17 +33,17 @@ const ProjectGallery = () => {
           className="text-center mb-12"
         >
           <p className="label-text mb-4">PROJECT GALLERY</p>
-          <h2 className="font-display text-3xl md:text-5xl text-foreground">
+          <h2 className="font-display text-3xl md:text-5xl text-foreground" style={{ fontWeight: 300 }}>
             Every finish, <span className="italic text-gradient-gold">photographed.</span>
           </h2>
         </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-[2px] mb-12">
           {filters.map((f) => (
             <button
               key={f}
               onClick={() => setActiveFilter(f)}
-              className={`px-4 py-2 text-xs tracking-widest font-body transition-all ${
+              className={`px-4 py-2.5 text-[0.68rem] tracking-[0.16em] uppercase font-body transition-all ${
                 activeFilter === f
                   ? "bg-primary text-primary-foreground"
                   : "bg-muted text-muted-foreground hover:text-foreground"
@@ -54,24 +54,24 @@ const ProjectGallery = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[3px]">
           {filtered.map((p, i) => (
             <motion.div
               key={p.name}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.1, duration: 0.85, ease: [0,0,.2,1] }}
               className="group relative overflow-hidden cursor-pointer aspect-[4/3]"
             >
               <img
                 src={p.img}
                 alt={p.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-[600ms] ease-[cubic-bezier(.25,.1,.25,1)] group-hover:scale-[1.06]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
                 <p className="label-text text-[10px] mb-1">{p.tag}</p>
-                <h3 className="font-display text-xl text-foreground">{p.name}</h3>
+                <h3 className="font-display text-xl text-white" style={{ fontWeight: 400 }}>{p.name}</h3>
               </div>
             </motion.div>
           ))}
