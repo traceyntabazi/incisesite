@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Globe, ArrowRight, Building2, Users, Package } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import LocationMap from "@/components/LocationMap";
 
 interface Location {
   id: string;
@@ -12,6 +13,8 @@ interface Location {
   city: string;
   country: string;
   countryCode: string;
+  lat: number;
+  lng: number;
   description?: string;
   products?: string[];
 }
@@ -25,6 +28,8 @@ const locations: Location[] = [
     city: "Kampala",
     country: "Uganda",
     countryCode: "UG",
+    lat: 0.3076,
+    lng: 32.6473,
     description: "Our manufacturing base and flagship showroom — where every INCISE system is formulated, tested, and perfected before it reaches your project.",
     products: ["Microtopping", "Metallic Finish", "Wallcrete", "Patio System"],
   },
@@ -36,6 +41,8 @@ const locations: Location[] = [
     city: "Nairobi",
     country: "Kenya",
     countryCode: "KE",
+    lat: -1.2672,
+    lng: 36.8114,
     description: "Our East African expansion hub — supporting architects, contractors, and specifiers across Kenya with technical consultation and product sourcing.",
     products: ["Microtopping", "Metallic Finish", "Wallcrete"],
   },
@@ -47,6 +54,8 @@ const locations: Location[] = [
     city: "Entebbe",
     country: "Uganda",
     countryCode: "UG",
+    lat: 0.0612,
+    lng: 32.4633,
     description: "Authorised INCISE distributor serving the Greater Entebbe region — combining premium lighting solutions with our decorative coating systems.",
     products: ["Microtopping", "Wallcrete", "Patio System"],
   },
@@ -58,6 +67,8 @@ const locations: Location[] = [
     city: "Nairobi",
     country: "Kenya",
     countryCode: "KE",
+    lat: -1.2200,
+    lng: 36.9060,
     description: "Certified INCISE partner providing product supply and on-ground technical support for projects across Nairobi's eastern corridor.",
     products: ["Microtopping", "Metallic Finish", "Wallcrete"],
   },
@@ -69,6 +80,8 @@ const locations: Location[] = [
     city: "Nairobi",
     country: "Kenya",
     countryCode: "KE",
+    lat: -1.2780,
+    lng: 36.7730,
     description: "Premium INCISE distribution partner in Lavington — specialising in high-end residential and hospitality projects across Western Nairobi.",
     products: ["Microtopping", "Metallic Finish", "Wallcrete", "Patio System"],
   },
@@ -247,6 +260,15 @@ const LocationsPage = () => {
           <span className="ml-auto text-[0.72rem] font-body text-muted-foreground" style={{ fontWeight: 300 }}>
             {filtered.length} location{filtered.length !== 1 ? "s" : ""}
           </span>
+        </div>
+      </section>
+
+      {/* Interactive Map */}
+      <section className="border-b border-border">
+        <div className="h-[420px] md:h-[520px] w-full">
+          <LocationMap
+            locations={filtered}
+          />
         </div>
       </section>
 
