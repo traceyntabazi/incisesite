@@ -263,6 +263,15 @@ const LocationsPage = () => {
         </div>
       </section>
 
+      {/* Interactive Map */}
+      <section className="border-b border-border">
+        <div className="h-[420px] md:h-[520px] w-full">
+          <LocationMap
+            locations={filtered}
+          />
+        </div>
+      </section>
+
       {/* Locations grid */}
       <section className="section-padding">
         <div className="max-w-[1400px] mx-auto">
