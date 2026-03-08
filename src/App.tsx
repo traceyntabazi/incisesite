@@ -10,6 +10,7 @@ import AcademyPage from "./pages/AcademyPage";
 import TechnicalPage from "./pages/TechnicalPage";
 import CommunityPage from "./pages/CommunityPage";
 import ColoursPage from "./pages/ColoursPage";
+import LocationsPage from "./pages/LocationsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
