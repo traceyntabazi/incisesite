@@ -180,6 +180,20 @@ const TechnicalPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Microcement Technical Data Sheets & Application Guides | INCISE"
+        description="Access INCISE microcement technical data sheets, specification guides, how-to videos, and FAQs. Detailed coverage rates, substrate requirements, and application methods for all cement-based coatings."
+        canonical="https://incisesite.lovable.app/technical"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            { "@type": "Question", name: "Can Microtopping be applied over existing tiles?", acceptedAnswer: { "@type": "Answer", text: "Yes — Microtopping can be applied directly over ceramic, porcelain, or natural stone tiles provided they are sound, clean, and correctly primed." } },
+            { "@type": "Question", name: "Is Microtopping suitable for wet areas like showers?", acceptedAnswer: { "@type": "Answer", text: "Yes, with the correct sealer system. INCISE Microtek Sealer creates a fully waterproof surface suitable for continuous water exposure." } },
+            { "@type": "Question", name: "Who can apply INCISE microcement products?", acceptedAnswer: { "@type": "Answer", text: "Microtopping and most INCISE systems require application by an INCISE-Certified Applicator trained through the INCISE Academy." } },
+          ],
+        }}
+      />
       <Navbar />
 
       {/* ── DARK HERO ── */}

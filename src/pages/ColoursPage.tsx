@@ -183,6 +183,11 @@ const ColoursPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Microcement Colour Palette — 80+ Tones | INCISE East Africa"
+        description="Explore INCISE's curated microcement colour palette — over 80 tones across neutrals, earths, stones, metals, botanicals, and ocean hues for cement-based wall and floor finishes."
+        canonical="https://incisesite.lovable.app/colours"
+      />
       <Navbar />
 
       {/* ── Hero ── */}
