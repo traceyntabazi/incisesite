@@ -7,7 +7,7 @@ const navLinks = [
   { label: "Gallery", href: "/gallery" },
   { label: "Projects", href: "/#projects" },
   { label: "Process", href: "/#process" },
-  { label: "Academy", href: "/#academy" },
+  { label: "Academy", href: "/academy" },
   { label: "Insights", href: "#insights" },
 ];
 
