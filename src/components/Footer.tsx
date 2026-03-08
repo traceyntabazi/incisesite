@@ -1,3 +1,5 @@
+import logoDark from "@/assets/logo-dark.png";
+
 const productLinks = [
   "Microtopping", "Metallic Finish", "Wallcrete", "Patio System",
 ];
@@ -16,9 +18,11 @@ const Footer = () => {
       <div className="max-w-[1400px] mx-auto">
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           <div>
-            <p className="font-display text-xl tracking-wider mb-4">
-              INCISE<span style={{ color: "hsl(35 38% 58%)" }}>®</span>
-            </p>
+            <img
+              src={logoDark}
+              alt="INCISE"
+              className="h-7 w-auto brightness-0 invert mb-4"
+            />
             <p className="text-white/60 text-[0.88rem] font-body leading-[1.95]" style={{ fontWeight: 300 }}>
               Premium decorative wall and floor coatings, manufactured in Uganda
               for East Africa.

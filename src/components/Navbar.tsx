@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import logoDark from "@/assets/logo-dark.png";
 
 const navLinks = [
   { label: "Products", href: "/products" },
@@ -35,8 +36,14 @@ const Navbar = () => {
         style={{ height: 76 }}
       >
         <div className="flex items-center justify-between px-6 md:px-[60px] h-full max-w-[1400px] mx-auto">
-          <Link to="/" className="font-display text-xl tracking-wider text-foreground">
-            INCISE<span className="text-primary">®</span>
+          <Link to="/">
+            <img
+              src={logoDark}
+              alt="INCISE"
+              className={`h-7 w-auto transition-all duration-500 ${
+                scrolled ? "" : "brightness-0 invert"
+              }`}
+            />
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
@@ -44,7 +51,11 @@ const Navbar = () => {
               <Link
                 key={link.label}
                 to={link.href}
-                className="text-[0.68rem] tracking-[0.16em] uppercase text-secondary-foreground hover:text-foreground transition-colors font-body"
+                className={`text-[0.68rem] tracking-[0.16em] uppercase font-body transition-colors ${
+                  scrolled
+                    ? "text-muted-foreground hover:text-foreground"
+                    : "text-white/70 hover:text-white"
+                }`}
               >
                 {link.label}
               </Link>
@@ -60,7 +71,7 @@ const Navbar = () => {
             </a>
             <button
               onClick={() => setMobileOpen(true)}
-              className="md:hidden text-foreground"
+              className={`md:hidden ${scrolled ? "text-foreground" : "text-white"}`}
             >
               <Menu size={24} />
             </button>
@@ -77,9 +88,7 @@ const Navbar = () => {
             exit={{ opacity: 0 }}
           >
             <div className="flex items-center justify-between px-6 h-[76px]">
-              <span className="font-display text-xl tracking-wider text-foreground">
-                INCISE<span className="text-primary">®</span>
-              </span>
+              <img src={logoDark} alt="INCISE" className="h-7 w-auto" />
               <button onClick={() => setMobileOpen(false)}>
                 <X size={24} className="text-foreground" />
               </button>
