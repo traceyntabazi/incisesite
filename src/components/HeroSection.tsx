@@ -7,7 +7,7 @@ const HeroSection = () => {
       <div className="absolute inset-0">
         <img
           src={heroImage}
-          alt="Luxury interior with INCISE microtopping finish"
+          alt="Premium microcement and decorative cement-based wall and floor finishes in a luxury interior by INCISE Uganda"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0" style={{ background: "linear-gradient(170deg, transparent 30%, rgba(26,24,22,.88) 100%)" }} />

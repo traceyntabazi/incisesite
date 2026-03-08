@@ -415,8 +415,8 @@ const ProductsPage = () => {
             className="text-secondary-foreground font-body max-w-xl leading-[1.95]"
             style={{ fontWeight: 300 }}
           >
-            Every INCISE product is a complete, engineered system — not just a coating in a bag.
-            Primer, application, sealing, and aftercare. One source. Full accountability.
+            Every INCISE microcement and decorative coating is a complete, engineered system — not just a coating in a bag.
+            Primer, application, sealing, and aftercare for cement-based wall and floor finishes. One source. Full accountability.
           </motion.p>
         </div>
       </section>
