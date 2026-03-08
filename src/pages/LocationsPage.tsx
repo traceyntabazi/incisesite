@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Globe, ArrowRight, Building2, Users, Package } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
 import LocationMap from "@/components/LocationMap";
 
@@ -184,6 +185,25 @@ const LocationsPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Where to Buy Microcement in Uganda & Kenya | INCISE Locations"
+        description="Find INCISE microcement and decorative coating products at our Kampala showroom, Nairobi office, and authorised distributors across East Africa. Become a distributor."
+        canonical="https://incisesite.lovable.app/locations"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "INCISE Uganda Limited — Showroom & Head Offices",
+          description: "Premium microcement and decorative coatings manufacturer showroom and offices.",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Plot 2490 YK Hameid Road, Luzira Industrial Park",
+            addressLocality: "Kampala",
+            addressCountry: "UG",
+          },
+          geo: { "@type": "GeoCoordinates", latitude: 0.3076, longitude: 32.6473 },
+          areaServed: ["Uganda", "Kenya"],
+        }}
+      />
       <Navbar />
 
       {/* Hero */}

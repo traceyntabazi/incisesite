@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
+import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
 import projectShowroom from "@/assets/project-showroom.jpg";
 import projectLobby from "@/assets/project-lobby.jpg";
@@ -58,6 +59,11 @@ const GalleryPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Microcement Project Gallery | INCISE East Africa"
+        description="Browse 300+ completed microcement, microtopping, and decorative coating projects across Uganda and Kenya. Residential, commercial, and hospitality surface finishes by INCISE."
+        canonical="https://incisesite.lovable.app/gallery"
+      />
       <Navbar />
 
       {/* Featured Project Hero */}

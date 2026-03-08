@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, Eye, Layers, Palette, Sparkles } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
 
 /* ── colour data ── */
@@ -182,6 +183,11 @@ const ColoursPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Microcement Colour Palette — 80+ Tones | INCISE East Africa"
+        description="Explore INCISE's curated microcement colour palette — over 80 tones across neutrals, earths, stones, metals, botanicals, and ocean hues for cement-based wall and floor finishes."
+        canonical="https://incisesite.lovable.app/colours"
+      />
       <Navbar />
 
       {/* ── Hero ── */}

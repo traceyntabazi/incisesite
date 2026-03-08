@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
+import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
 
 const productNav = [
@@ -363,6 +364,26 @@ const ProductsPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Microcement & Decorative Coating Products | INCISE East Africa"
+        description="Explore INCISE's complete range of microcement, microtopping, metallic finishes, Wallcrete, Cemwash, patio systems, and color hardener. Premium cement-based wall and floor finishes manufactured in Uganda."
+        canonical="https://incisesite.lovable.app/products"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "INCISE Microcement & Decorative Coating Products",
+          description: "Complete range of microcement and cement-based decorative wall and floor finishes by INCISE.",
+          numberOfItems: 6,
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Microtopping — Seamless Microcement Finish", url: "https://incisesite.lovable.app/products#microtopping" },
+            { "@type": "ListItem", position: 2, name: "Metallic Finish — Decorative Wall Coating", url: "https://incisesite.lovable.app/products#metallic" },
+            { "@type": "ListItem", position: 3, name: "Wallcrete — Cement-Based Wall Finish", url: "https://incisesite.lovable.app/products#wallcrete" },
+            { "@type": "ListItem", position: 4, name: "Cemwash — Mineral Wall Coating", url: "https://incisesite.lovable.app/products#cemwash" },
+            { "@type": "ListItem", position: 5, name: "Patio System — Outdoor Floor Coating", url: "https://incisesite.lovable.app/products#patio" },
+            { "@type": "ListItem", position: 6, name: "Color Hardener — Industrial Floor Finish", url: "https://incisesite.lovable.app/products#hardener" },
+          ],
+        }}
+      />
       <Navbar />
 
       {/* Page Hero */}
@@ -382,7 +403,7 @@ const ProductsPage = () => {
             className="font-display text-5xl md:text-7xl lg:text-8xl text-foreground leading-[0.95] mb-4"
             style={{ fontWeight: 300 }}
           >
-            Complete Surface
+            Complete Microcement &amp; Cement-Based Surface
             <br />
             <span className="italic text-muted-foreground">Systems.</span>
           </motion.h1>
@@ -394,8 +415,8 @@ const ProductsPage = () => {
             className="text-secondary-foreground font-body max-w-xl leading-[1.95]"
             style={{ fontWeight: 300 }}
           >
-            Every INCISE product is a complete, engineered system — not just a coating in a bag.
-            Primer, application, sealing, and aftercare. One source. Full accountability.
+            Every INCISE microcement and decorative coating is a complete, engineered system — not just a coating in a bag.
+            Primer, application, sealing, and aftercare for cement-based wall and floor finishes. One source. Full accountability.
           </motion.p>
         </div>
       </section>

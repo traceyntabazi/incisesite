@@ -7,7 +7,7 @@ const HeroSection = () => {
       <div className="absolute inset-0">
         <img
           src={heroImage}
-          alt="Luxury interior with INCISE microtopping finish"
+          alt="Premium microcement and decorative cement-based wall and floor finishes in a luxury interior by INCISE Uganda"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0" style={{ background: "linear-gradient(170deg, transparent 30%, rgba(26,24,22,.88) 100%)" }} />
@@ -20,15 +20,15 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 0.3 }}
           className="max-w-3xl"
         >
-          <p className="label-text mb-4" style={{ color: "hsl(35 38% 58%)" }}>East Africa's Surface Authority</p>
+          <p className="label-text mb-4" style={{ color: "hsl(35 38% 58%)" }}>East Africa's Microcement & Surface Authority</p>
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-white leading-[0.95] mb-6" style={{ fontWeight: 300 }}>
-            The finish that defines{" "}
-            <span className="italic text-gradient-gold">a space.</span>
+            Premium microcement &amp; decorative{" "}
+            <span className="italic text-gradient-gold">coatings.</span>
           </h1>
           <p className="text-white/80 text-lg md:text-xl max-w-xl mb-10 font-body leading-relaxed" style={{ fontWeight: 300 }}>
-            Premium decorative coatings for walls and floors — crafted for
-            architects, designers, and developers who refuse to settle for
-            ordinary surfaces.
+            Seamless cement-based wall and floor finishes — manufactured in Uganda
+            for architects, designers, and developers across East Africa who refuse to
+            settle for ordinary surfaces.
           </p>
           <div className="flex flex-wrap gap-4">
             <a
