@@ -9,6 +9,7 @@ import ProductsPage from "./pages/ProductsPage";
 import AcademyPage from "./pages/AcademyPage";
 import TechnicalPage from "./pages/TechnicalPage";
 import CommunityPage from "./pages/CommunityPage";
+import ColoursPage from "./pages/ColoursPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
