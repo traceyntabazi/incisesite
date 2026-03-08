@@ -1,5 +1,13 @@
 import { motion } from "framer-motion";
 import textureImage from "@/assets/texture-grey.jpg";
+import packagingImage from "@/assets/product-packaging.jpg";
+
+const brandValues = [
+  { word: "Elegant", desc: "Premium finishes that elevate every space." },
+  { word: "Safe", desc: "Certified systems with full health & safety compliance." },
+  { word: "Adaptable", desc: "Solutions for every substrate, climate, and vision." },
+  { word: "Innovative", desc: "Proprietary formulations made in Uganda for East Africa." },
+];
 
 const features = [
   {
@@ -23,6 +31,26 @@ const AboutSection = () => {
   return (
     <section className="section-padding">
       <div className="max-w-[1400px] mx-auto">
+        {/* Brand Values Strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.85, ease: [0,0,.2,1] }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-[2px] mb-20"
+        >
+          {brandValues.map((v, i) => (
+            <div key={i} className="bg-card p-6 md:p-8">
+              <h3 className="font-display text-2xl md:text-3xl text-foreground mb-2" style={{ fontWeight: 300 }}>
+                {v.word}
+              </h3>
+              <p className="text-muted-foreground text-[0.82rem] font-body leading-[1.8]" style={{ fontWeight: 300 }}>
+                {v.desc}
+              </p>
+            </div>
+          ))}
+        </motion.div>
+
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -53,9 +81,10 @@ const AboutSection = () => {
               <span className="italic text-gradient-gold">a voice.</span>
             </h2>
             <p className="text-secondary-foreground leading-[1.95] mb-10 font-body" style={{ fontWeight: 300 }}>
-              If you've ever walked into a space and felt something — a calm, a
-              weight, an elegance you couldn't quite name — chances are the
-              surface design was doing the work. INCISE creates that feeling.
+              We wanted to create a brand identity that was representative of the creative
+              process; a creative process that requires experimentation which calls for trust
+              and design discipline. Every surface we complete is an argument that premium
+              can come from East Africa.
             </p>
 
             <div className="space-y-8">
@@ -75,6 +104,39 @@ const AboutSection = () => {
             </div>
           </motion.div>
         </div>
+
+        {/* Product Packaging Showcase */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.85, ease: [0,0,.2,1] }}
+          className="mt-20 grid md:grid-cols-2 gap-[2px] items-center"
+        >
+          <div className="bg-card p-8 md:p-12">
+            <p className="label-text mb-4">THE INCISE SYSTEM</p>
+            <h3 className="font-display text-2xl md:text-3xl text-foreground mb-4" style={{ fontWeight: 300 }}>
+              Complete coating systems, <span className="italic">manufactured in Uganda.</span>
+            </h3>
+            <p className="text-muted-foreground text-[0.88rem] font-body leading-[1.95] mb-6" style={{ fontWeight: 300 }}>
+              Base coats, finish coats, polymers, sealers — every component engineered to work together.
+              No third-party compatibility risks. One system, total accountability.
+            </p>
+            <a
+              href="/products"
+              className="inline-flex bg-foreground text-background px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-secondary-foreground transition-colors"
+            >
+              EXPLORE PRODUCTS →
+            </a>
+          </div>
+          <div className="bg-card">
+            <img
+              src={packagingImage}
+              alt="INCISE Microtopping product packaging — base coat, finish coat, and polymer buckets"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </motion.div>
       </div>
     </section>
   );
