@@ -10,6 +10,7 @@ const navLinks = [
   { label: "Projects", href: "/#projects" },
   { label: "Technical", href: "/technical" },
   { label: "Academy", href: "/academy" },
+  { label: "Community", href: "/academy/community" },
 ];
 
 const Navbar = () => {
