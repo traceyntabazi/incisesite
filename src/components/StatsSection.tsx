@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 
 const stats = [
-  { value: "300+", label: "Completed Projects" },
-  { value: "$10M", label: "Revenue Target · 2029" },
+  { value: "400+", label: "Clients Served" },
+  { value: "700+", label: "Applicators Trained" },
   { value: "2020", label: "Year Founded" },
   { value: "100yr", label: "Institution Vision" },
 ];
