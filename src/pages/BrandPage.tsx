@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
+import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
 import textureImage from "@/assets/texture-grey.jpg";
 import packagingImage from "@/assets/product-packaging.jpg";
