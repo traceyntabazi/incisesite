@@ -403,7 +403,7 @@ const ProductsPage = () => {
             className="font-display text-5xl md:text-7xl lg:text-8xl text-foreground leading-[0.95] mb-4"
             style={{ fontWeight: 300 }}
           >
-            Complete Surface
+            Complete Microcement &amp; Cement-Based Surface
             <br />
             <span className="italic text-muted-foreground">Systems.</span>
           </motion.h1>
