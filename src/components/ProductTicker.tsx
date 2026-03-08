@@ -1,22 +1,21 @@
 const items = [
-  "MICROTOPPING", "WALLCRETE", "METALLIC FINISH", "PATIO SYSTEMS",
-  "COLOR HARDENER", "CEMWASH", "STAMPED CONCRETE", "MICROTEK",
-  "MANUFACTURED IN UGANDA", "12+ YEARS EXPERIENCE", "300+ PROJECTS", "CERTIFIED APPLICATORS",
+  "MICROTOPPING", "METALLIC FINISH", "WALLCRETE", "CEMWASH",
+  "PATIO SYSTEM", "COLOR HARDENER", "UGANDA MANUFACTURED", "EAST AFRICA",
 ];
 
 const ProductTicker = () => {
   const doubled = [...items, ...items];
 
   return (
-    <div className="overflow-hidden border-y border-border py-4 bg-secondary">
+    <div className="overflow-hidden py-4 bg-dark">
       <div className="animate-marquee flex whitespace-nowrap">
         {doubled.map((item, i) => (
           <span
             key={i}
-            className="mx-8 text-sm tracking-[0.15em] text-muted-foreground font-body flex items-center gap-8"
+            className="mx-8 text-[0.68rem] tracking-[0.16em] text-white/50 font-body flex items-center gap-8 uppercase"
           >
             {item}
-            <span className="text-primary text-xs">◆</span>
+            <span style={{ color: "hsl(35 38% 58%)" }} className="text-xs">◆</span>
           </span>
         ))}
       </div>

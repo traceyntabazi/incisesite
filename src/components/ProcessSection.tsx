@@ -10,8 +10,8 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section id="process" className="section-padding bg-secondary">
-      <div className="max-w-5xl mx-auto">
+    <section id="process" className="section-padding">
+      <div className="max-w-[1000px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -19,7 +19,7 @@ const ProcessSection = () => {
           className="text-center mb-20"
         >
           <p className="label-text mb-4">THE PROCESS</p>
-          <h2 className="font-display text-3xl md:text-5xl text-foreground">
+          <h2 className="font-display text-3xl md:text-5xl text-foreground" style={{ fontWeight: 300 }}>
             From bare substrate to finished{" "}
             <span className="italic text-gradient-gold">masterpiece.</span>
           </h2>
@@ -32,17 +32,17 @@ const ProcessSection = () => {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.1, duration: 0.85, ease: [0,0,.2,1] }}
               className="flex gap-6 md:gap-10 py-8 border-t border-border group"
             >
-              <span className="text-3xl md:text-5xl font-display text-primary/30 group-hover:text-primary transition-colors flex-shrink-0">
+              <span className="text-3xl md:text-5xl font-display text-primary/30 group-hover:text-primary transition-colors flex-shrink-0" style={{ fontWeight: 300 }}>
                 {step.num}
               </span>
               <div>
-                <h3 className="font-display text-xl md:text-2xl text-foreground mb-2">
+                <h3 className="font-display text-xl md:text-2xl text-foreground mb-2" style={{ fontWeight: 400 }}>
                   {step.title}
                 </h3>
-                <p className="text-muted-foreground font-body leading-relaxed text-sm">
+                <p className="text-muted-foreground font-body leading-[1.95] text-[0.88rem]" style={{ fontWeight: 300 }}>
                   {step.desc}
                 </p>
               </div>

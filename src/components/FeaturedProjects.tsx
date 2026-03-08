@@ -14,43 +14,43 @@ const featured = [
 const FeaturedProjects = () => {
   return (
     <section className="section-padding bg-secondary">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1400px] mx-auto">
         <div className="flex items-end justify-between mb-12">
           <div>
             <p className="label-text mb-4">OUR WORK</p>
-            <h2 className="font-display text-3xl md:text-4xl text-foreground">
+            <h2 className="font-display text-3xl md:text-4xl text-foreground" style={{ fontWeight: 300 }}>
               Where INCISE comes to <span className="italic text-gradient-gold">life.</span>
             </h2>
           </div>
-          <a href="#" className="hidden md:inline-flex text-sm text-muted-foreground hover:text-primary transition-colors font-body tracking-wide">
+          <a href="/gallery" className="hidden md:inline-flex text-[0.68rem] tracking-[0.16em] uppercase text-muted-foreground hover:text-primary transition-colors font-body border-b border-secondary-foreground/25 hover:border-foreground pb-0.5">
             ALL PROJECTS →
           </a>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-[3px]">
           {featured.map((p, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.1, duration: 0.85, ease: [0,0,.2,1] }}
               className="group cursor-pointer"
             >
               <div className="overflow-hidden aspect-[16/10] mb-4">
                 <img
                   src={p.img}
                   alt={p.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-[600ms] ease-[cubic-bezier(.25,.1,.25,1)] group-hover:scale-[1.06]"
                 />
               </div>
-              <p className="text-xs text-muted-foreground font-body mb-1">
+              <p className="text-[0.65rem] text-muted-foreground font-body mb-1" style={{ fontWeight: 300 }}>
                 {p.year} · {p.location}
               </p>
-              <h3 className="font-display text-xl text-foreground group-hover:text-primary transition-colors">
+              <h3 className="font-display text-xl text-foreground group-hover:text-primary transition-colors" style={{ fontWeight: 400 }}>
                 {p.title}
               </h3>
-              <p className="text-sm text-muted-foreground font-body">{p.desc}</p>
+              <p className="text-[0.88rem] text-muted-foreground font-body" style={{ fontWeight: 300 }}>{p.desc}</p>
             </motion.div>
           ))}
         </div>

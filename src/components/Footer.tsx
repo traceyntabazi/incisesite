@@ -1,43 +1,41 @@
 const productLinks = [
-  "Microtopping", "Metallic Finish", "Wallcrete", "Cemwash",
-  "Patio", "Color Hardener", "Stamped Concrete", "Microtek",
+  "Microtopping", "Metallic Finish", "Wallcrete", "Patio System",
 ];
 
-const companyLinks = [
-  "About INCISE", "All Projects", "INCISE Academy",
-  "Insights & News", "Downloads", "Testimonials", "Partner Programme",
+const exploreLinks = [
+  "Gallery", "Projects", "Technical Hub", "Academy",
 ];
 
 const contactLinks = [
-  "Get in Touch", "Become a Partner", "Training Events",
-  "info@incise.ug", "+256 — — — —", "Kampala, Uganda",
+  "Get a Quote", "info@incise.ug", "Kampala, Uganda",
 ];
 
 const Footer = () => {
   return (
-    <footer className="px-6 md:px-12 lg:px-20 py-16 bg-background border-t border-border">
-      <div className="max-w-7xl mx-auto">
+    <footer className="px-6 md:px-[60px] py-16 bg-dark text-white">
+      <div className="max-w-[1400px] mx-auto">
         <div className="grid md:grid-cols-4 gap-12 mb-16">
-          {/* Brand */}
           <div>
-            <p className="font-display text-xl tracking-wider text-foreground mb-4">
-              INCISE<span className="text-primary">®</span>
+            <p className="font-display text-xl tracking-wider mb-4">
+              INCISE<span style={{ color: "hsl(35 38% 58%)" }}>®</span>
             </p>
-            <p className="text-muted-foreground text-sm font-body leading-relaxed">
+            <p className="text-white/60 text-[0.88rem] font-body leading-[1.95]" style={{ fontWeight: 300 }}>
               Premium decorative wall and floor coatings, manufactured in Uganda
-              for East Africa's most considered spaces.
+              for East Africa.
+            </p>
+            <p className="font-display italic text-white/40 text-sm mt-3">
+              A Life Full of Design Secrets.
             </p>
           </div>
 
-          {/* Products */}
           <div>
-            <p className="text-xs tracking-widest text-muted-foreground uppercase font-body mb-4">
+            <p className="text-[0.6rem] tracking-[0.24em] text-white/40 uppercase font-body mb-4" style={{ fontWeight: 400 }}>
               Products
             </p>
             <ul className="space-y-2">
               {productLinks.map((l) => (
                 <li key={l}>
-                  <a href="#" className="text-sm text-secondary-foreground hover:text-primary font-body transition-colors">
+                  <a href="#" className="text-[0.88rem] text-white/70 hover:text-white font-body transition-colors" style={{ fontWeight: 300 }}>
                     {l}
                   </a>
                 </li>
@@ -45,15 +43,14 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Company */}
           <div>
-            <p className="text-xs tracking-widest text-muted-foreground uppercase font-body mb-4">
-              Company
+            <p className="text-[0.6rem] tracking-[0.24em] text-white/40 uppercase font-body mb-4" style={{ fontWeight: 400 }}>
+              Explore
             </p>
             <ul className="space-y-2">
-              {companyLinks.map((l) => (
+              {exploreLinks.map((l) => (
                 <li key={l}>
-                  <a href="#" className="text-sm text-secondary-foreground hover:text-primary font-body transition-colors">
+                  <a href="#" className="text-[0.88rem] text-white/70 hover:text-white font-body transition-colors" style={{ fontWeight: 300 }}>
                     {l}
                   </a>
                 </li>
@@ -61,34 +58,30 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
-            <p className="text-xs tracking-widest text-muted-foreground uppercase font-body mb-4">
+            <p className="text-[0.6rem] tracking-[0.24em] text-white/40 uppercase font-body mb-4" style={{ fontWeight: 400 }}>
               Contact
             </p>
             <ul className="space-y-2">
               {contactLinks.map((l) => (
                 <li key={l}>
-                  <span className="text-sm text-secondary-foreground font-body">{l}</span>
+                  <span className="text-[0.88rem] text-white/70 font-body" style={{ fontWeight: 300 }}>{l}</span>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-muted-foreground font-body">
-            © 2025 INCISE Uganda. All rights reserved. Manufactured in Uganda.
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-white/30 font-body">
+            © 2025 INCISE Uganda Limited
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-muted-foreground hover:text-primary font-body transition-colors">
+            <a href="#" className="text-xs text-white/30 hover:text-white/60 font-body transition-colors">
               Privacy
             </a>
-            <a href="#" className="text-xs text-muted-foreground hover:text-primary font-body transition-colors">
+            <a href="#" className="text-xs text-white/30 hover:text-white/60 font-body transition-colors">
               Terms
-            </a>
-            <a href="#" className="text-xs text-muted-foreground hover:text-primary font-body transition-colors">
-              Sitemap
             </a>
           </div>
         </div>
