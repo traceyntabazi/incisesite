@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import logoDark from "@/assets/logo-dark.png";
 
 const navLinks = [
+  { label: "About", href: "/about" },
   { label: "Products", href: "/products" },
   { label: "Colours", href: "/colours" },
   { label: "Gallery", href: "/gallery" },
   { label: "Projects", href: "/#projects" },
   { label: "Technical", href: "/technical" },
   { label: "Academy", href: "/academy" },
-  { label: "Community", href: "/academy/community" },
   { label: "Locations", href: "/locations" },
 ];
 
