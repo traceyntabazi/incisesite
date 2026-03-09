@@ -286,7 +286,72 @@ const ProductCard = ({ product, index }: { product: ProductData; index: number }
 };
 
 const ComparisonTable = () => (
-  // ... keep existing code
+  <section id="compare" className="section-padding bg-secondary">
+    <div className="max-w-[1400px] mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center mb-12"
+      >
+        <p className="label-text mb-4">COMPARE PRODUCTS</p>
+        <h2 className="font-display text-3xl md:text-4xl text-foreground" style={{ fontWeight: 300 }}>
+          Find the right system for <span className="italic text-gradient-gold">your project.</span>
+        </h2>
+      </motion.div>
+
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm font-body">
+          <thead>
+            <tr className="border-b border-border">
+              {["Product", "Walls", "Floors", "Outdoor", "Waterproof", "Thickness", "Best Use", "Complexity"].map((h) => (
+                <th key={h} className="text-left py-4 px-3 text-[0.6rem] tracking-[0.24em] uppercase text-muted-foreground" style={{ fontWeight: 400 }}>
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {comparisonData.map((row) => (
+              <tr key={row.name} className="border-b border-border hover:bg-card transition-colors">
+                <td className="py-4 px-3 text-foreground" style={{ fontWeight: 500 }}>{row.name}</td>
+                <td className="py-4 px-3">{row.walls ? <span className="text-primary">✓</span> : <span className="text-muted-foreground/30">—</span>}</td>
+                <td className="py-4 px-3">{row.floors ? <span className="text-primary">✓</span> : <span className="text-muted-foreground/30">—</span>}</td>
+                <td className="py-4 px-3">{row.outdoor ? <span className="text-primary">✓</span> : <span className="text-muted-foreground/30">—</span>}</td>
+                <td className="py-4 px-3">{row.waterproof ? <span className="text-primary">✓</span> : <span className="text-muted-foreground/30">—</span>}</td>
+                <td className="py-4 px-3 text-muted-foreground">{row.thickness}</td>
+                <td className="py-4 px-3 text-muted-foreground">{row.bestUse}</td>
+                <td className="py-4 px-3 text-muted-foreground">{row.complexity}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center mt-14 border-t border-border pt-12"
+      >
+        <h3 className="font-display text-xl text-foreground mb-3" style={{ fontWeight: 400 }}>
+          Not sure which product is right for you?
+        </h3>
+        <p className="text-muted-foreground font-body text-[0.88rem] max-w-lg mx-auto mb-8" style={{ fontWeight: 300 }}>
+          Our technical team consults on every project. Tell us your substrate, application,
+          and design goal — we'll recommend the right system and send physical samples.
+        </p>
+        <div className="flex flex-wrap justify-center gap-4">
+          <a href="#contact" className="bg-primary text-primary-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-gold-light transition-colors">
+            START A CONVERSATION →
+          </a>
+          <a href="#" className="border border-secondary-foreground/30 text-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:border-foreground transition-colors">
+            VIEW TECHNICAL DATA →
+          </a>
+        </div>
+      </motion.div>
+    </div>
+  </section>
 );
 
 const faqs = [
