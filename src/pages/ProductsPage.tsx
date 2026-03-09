@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
@@ -353,6 +354,131 @@ const ComparisonTable = () => (
   </section>
 );
 
+const faqs = [
+  {
+    q: "What is microcement and how is it different from regular cement?",
+    a: "Microcement is an ultra-thin, polymer-modified cement-based coating applied at just 1–3mm thickness over existing surfaces. Unlike regular cement or screed, it creates a seamless, jointless finish that is both decorative and functional — available in 80+ colours with matte to high-gloss options. It doesn't require demolition of existing tiles or floors.",
+  },
+  {
+    q: "Can microcement be applied over existing tiles?",
+    a: "Yes. One of the biggest advantages of microcement is that it can be applied directly over existing tiles, screed, concrete, or plaster — eliminating the need for costly and time-consuming demolition. The surface must be properly primed and prepared by a certified INCISE applicator.",
+  },
+  {
+    q: "Is microcement waterproof? Can it be used in bathrooms and wet areas?",
+    a: "Yes — when correctly sealed with the INCISE polyurethane sealer system, microcement is fully waterproof and suitable for bathrooms, showers, wet rooms, swimming pool surrounds, and kitchen splashbacks. Proper sealing by a trained applicator is essential.",
+  },
+  {
+    q: "How long does a microcement floor or wall last?",
+    a: "A correctly applied and sealed INCISE microcement surface has a lifespan of 20+ years. Durability depends on proper substrate preparation, application by a certified applicator, correct sealer application, and appropriate maintenance.",
+  },
+  {
+    q: "Do I need a certified applicator to install INCISE products?",
+    a: "Yes. All INCISE microcement and decorative coating products must be applied by an INCISE-certified applicator who has completed training at the INCISE Academy. This ensures correct substrate preparation, product mixing, application technique, and sealing — and is required for any product warranty.",
+  },
+  {
+    q: "How much does microcement cost compared to tiles or natural stone?",
+    a: "Microcement is competitively priced with premium tiles and natural stone, but offers significant savings on labour, demolition, grouting, and waste disposal. The total installed cost — including material, application, and sealing — is typically comparable to or lower than high-end tiling when you factor in the seamless finish and reduced installation time.",
+  },
+  {
+    q: "What colours and finishes are available?",
+    a: "INCISE offers over 80 standard tones across its product range — from warm whites and sandy neutrals to deep charcoals and bold earth tones. Finishes range from matte (natural, organic feel) through satin to high-gloss (polished, contemporary look). Custom colour matching is available for larger projects.",
+  },
+  {
+    q: "Can INCISE products be used outdoors in Uganda's climate?",
+    a: "Yes. The INCISE Patio System and Color Hardener are specifically engineered for East Africa's tropical climate — UV-stable, non-slip, and rated for equatorial sun exposure. Wallcrete and Cemwash are also suitable for exterior walls. Products are tropics-tested, not imported from temperate-climate manufacturers.",
+  },
+  {
+    q: "How do I maintain a microcement surface?",
+    a: "Microcement surfaces are low-maintenance. Regular cleaning with a pH-neutral cleaner and periodic re-waxing (every 6–12 months for floors) is all that's needed. Avoid abrasive cleaners or acidic substances. INCISE provides a detailed aftercare guide with every installation.",
+  },
+  {
+    q: "Where can I see INCISE products in person or request samples?",
+    a: "Visit our showrooms in Kampala (Luzira Industrial Park) or Nairobi (Purshotam Place, Westlands). You can also request physical colour samples and product swatches delivered to your location. Contact us or use the 'Request a Sample' button on any product page.",
+  },
+];
+
+const FAQSection = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  return (
+    <section id="faq" className="section-padding bg-secondary">
+      <div className="max-w-[1400px] mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-14"
+        >
+          <p className="label-text mb-4">FREQUENTLY ASKED QUESTIONS</p>
+          <h2 className="font-display text-3xl md:text-4xl text-foreground" style={{ fontWeight: 300 }}>
+            Everything architects and clients <span className="italic text-gradient-gold">ask us.</span>
+          </h2>
+          <p className="text-muted-foreground font-body text-[0.88rem] max-w-lg mx-auto mt-4" style={{ fontWeight: 300 }}>
+            Common questions about microcement, application, durability, and working with INCISE products in East Africa.
+          </p>
+        </motion.div>
+
+        <div className="max-w-3xl mx-auto">
+          {faqs.map((faq, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.04 }}
+              className="border-b border-border"
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                className="w-full flex items-center justify-between py-5 text-left gap-4 group"
+              >
+                <h3 className="font-body text-[0.92rem] text-foreground group-hover:text-primary transition-colors" style={{ fontWeight: 400 }}>
+                  {faq.q}
+                </h3>
+                <ChevronDown
+                  size={18}
+                  className={`shrink-0 text-muted-foreground transition-transform duration-300 ${
+                    openIndex === i ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              <AnimatePresence initial={false}>
+                {openIndex === i && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <p className="text-muted-foreground font-body text-[0.86rem] leading-[1.95] pb-5 pr-10" style={{ fontWeight: 300 }}>
+                      {faq.a}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mt-14"
+        >
+          <p className="text-muted-foreground font-body text-[0.88rem] mb-4" style={{ fontWeight: 300 }}>
+            Have a question we haven't answered?
+          </p>
+          <a href="#contact" className="bg-primary text-primary-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-gold-light transition-colors inline-block">
+            ASK OUR TEAM →
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
 const ProductsPage = () => {
   const [activeNav, setActiveNav] = useState("microtopping");
 
@@ -447,6 +573,7 @@ const ProductsPage = () => {
       ))}
 
       <ComparisonTable />
+      <FAQSection />
 
       <Footer />
     </div>
