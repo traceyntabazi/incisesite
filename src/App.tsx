@@ -13,6 +13,7 @@ import CommunityPage from "./pages/CommunityPage";
 import ColoursPage from "./pages/ColoursPage";
 import LocationsPage from "./pages/LocationsPage";
 import NotFound from "./pages/NotFound";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/about" element={<BrandPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/academy" element={<AcademyPage />} />
           <Route path="/academy/community" element={<CommunityPage />} />
           <Route path="/technical" element={<TechnicalPage />} />

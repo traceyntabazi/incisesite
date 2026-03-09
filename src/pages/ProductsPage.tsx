@@ -5,186 +5,7 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
-
-const productNav = [
-  { key: "microtopping", label: "MICROTOPPING" },
-  { key: "metallic", label: "METALLIC FINISH" },
-  { key: "wallcrete", label: "WALLCRETE" },
-  { key: "cemwash", label: "CEMWASH" },
-  { key: "patio", label: "PATIO SYSTEM" },
-  { key: "hardener", label: "COLOR HARDENER" },
-  { key: "compare", label: "COMPARE ALL" },
-];
-
-interface ProductSpec {
-  label: string;
-  value: string;
-}
-
-interface ProductData {
-  id: string;
-  badge: string;
-  context: string;
-  name: string;
-  tagline: string;
-  description: string[];
-  specs: ProductSpec[];
-  applications: string[];
-  toneCount: number;
-  img: string;
-}
-
-const products: ProductData[] = [
-  {
-    id: "microtopping",
-    badge: "SIGNATURE PRODUCT",
-    context: "WALLS & FLOORS · INDOOR & OUTDOOR · OUR MOST SPECIFIED PRODUCT",
-    name: "Microtopping",
-    tagline: "The finish that changed East African interiors.",
-    description: [
-      "An ultra-thin, seamless decorative coating applied at just 1–3mm directly over tiles, screed, or existing surfaces. No demolition. No joints. No grout lines. Just a clean, continuous surface that is also fully waterproof and hygienic.",
-      "Available in over 80 standard tones — from bone white to deep charcoal — with matte, satin, or high-gloss sealer options. Microtopping is the most specified INCISE product because architects who know the difference, specify it by name.",
-    ],
-    specs: [
-      { label: "Application Thickness", value: "1–3mm" },
-      { label: "Finish Range", value: "Matte to High-Gloss" },
-      { label: "Suitable Substrates", value: "Concrete, Tiles, Screed, Plaster" },
-      { label: "Colour Range", value: "80+ standard tones" },
-      { label: "Waterproof", value: "Yes — with correct sealer" },
-      { label: "Lifespan", value: "20+ years correctly applied" },
-      { label: "Application Method", value: "Trowel — certified applicators only" },
-      { label: "Coverage Per Coat", value: "Approx. 1 kg/m² per coat" },
-    ],
-    applications: ["Residential Floors", "Bathroom Walls", "Kitchen Worktops", "Hotel Lobbies", "Retail Floors", "Feature Walls"],
-    toneCount: 10,
-    img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80",
-  },
-  {
-    id: "metallic",
-    badge: "FEATURE SURFACES",
-    context: "WALLS · INTERIOR · DECORATIVE FEATURE SURFACES",
-    name: "Metallic Finish",
-    tagline: "The finish that clients photograph. Every time.",
-    description: [
-      "Bring depth, drama, and changing light to interior walls. Lustrous metallic effects in copper, gold, silver, and bronze create a living surface that shifts as light conditions change throughout the day. No two applications are identical — which is precisely the point.",
-      "Ideal for reception areas, restaurant feature walls, hotel corridors, and residential statement spaces where first impressions carry real weight.",
-    ],
-    specs: [
-      { label: "Application", value: "Interior walls only" },
-      { label: "Effect", value: "Dimensional metallic sheen" },
-      { label: "Colour Tones", value: "Gold, Copper, Silver, Bronze, Midnight" },
-      { label: "Light Response", value: "Shifts with natural & artificial light" },
-      { label: "Substrate", value: "Prepared plaster or concrete" },
-      { label: "Best For", value: "Feature walls, reception areas" },
-    ],
-    applications: ["Hotel Lobbies", "Restaurant Features", "Reception Walls", "Living Room Accents", "Office Entrances"],
-    toneCount: 5,
-    img: "https://images.unsplash.com/photo-1565182999561-18d7dc61c393?w=800&q=80",
-  },
-  {
-    id: "wallcrete",
-    badge: "CONCRETE CHARACTER",
-    context: "WALLS · INDOOR & OUTDOOR · CONCRETE CHARACTER",
-    name: "Wallcrete",
-    tagline: "Real concrete character. Applied with precision.",
-    description: [
-      "The raw character of poured concrete — refined for modern walls. Wallcrete delivers authentic industrial texture with the workability and precision of a designed coating system.",
-      "Suitable for both interior and exterior walls, and durable enough for commercial environments where visual character needs to survive daily use.",
-    ],
-    specs: [
-      { label: "Texture", value: "Rough to smooth concrete finish" },
-      { label: "Application", value: "Indoor & Outdoor walls" },
-      { label: "Coverage", value: "3–4 m² per kg" },
-      { label: "Colours", value: "25 standard tones" },
-      { label: "Durability", value: "Impact and weather resistant" },
-      { label: "Sealer Required", value: "Yes — waterproofing sealer" },
-    ],
-    applications: ["Office Walls", "Retail Interiors", "Exterior Facades", "Feature Walls", "Restaurant Walls"],
-    toneCount: 5,
-    img: "https://images.unsplash.com/photo-1600607687644-c7f34b5b6f4a?w=800&q=80",
-  },
-  {
-    id: "cemwash",
-    badge: "ORGANIC & NATURAL",
-    context: "WALLS · ORGANIC & NATURAL · BREATHABLE MINERAL COATING",
-    name: "Cemwash",
-    tagline: "Walls that improve with age.",
-    description: [
-      "A breathable, mineral-based wall wash inspired by traditional lime finishes. Cemwash creates walls with organic depth and warmth that improves with age.",
-      "The antidote to perfection. For clients who want their space to feel alive rather than sealed.",
-    ],
-    specs: [
-      { label: "Character", value: "Natural, organic variation" },
-      { label: "Breathable", value: "Yes — mineral base" },
-      { label: "Maintenance", value: "Low — improves with age" },
-      { label: "Best For", value: "Living areas, hospitality" },
-      { label: "Palette", value: "Earth & warm neutral tones" },
-      { label: "Substrate", value: "Plaster, masonry, concrete block" },
-    ],
-    applications: ["Living Rooms", "Boutique Hotels", "Dining Rooms", "Exterior Walls", "Wellness Spaces"],
-    toneCount: 5,
-    img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80",
-  },
-  {
-    id: "patio",
-    badge: "OUTDOOR SYSTEM",
-    context: "FLOORS · OUTDOOR COMPLETE SYSTEM · TROPICS-RATED",
-    name: "Patio System",
-    tagline: "Built to survive East Africa's climate. Beautifully.",
-    description: [
-      "A complete outdoor floor coating system engineered specifically for Uganda's tropical climate. UV-stable, non-slip, and designed to handle foot traffic, poolside exposure, and equatorial sun.",
-      "Most imported patio systems were designed for temperate climates. INCISE Patio is formulated for ours.",
-    ],
-    specs: [
-      { label: "UV Stability", value: "High — tropics-rated" },
-      { label: "Slip Rating", value: "R11 anti-slip" },
-      { label: "Best For", value: "Patios, pool decks, driveways" },
-      { label: "Durability", value: "15+ year lifespan" },
-      { label: "Waterproof", value: "Yes — sealer included in system" },
-      { label: "Colour Range", value: "18 outdoor-rated tones" },
-    ],
-    applications: ["Swimming Pool Decks", "Driveways", "Garden Terraces", "Hotel Outdoor Areas", "Rooftop Floors"],
-    toneCount: 5,
-    img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
-  },
-  {
-    id: "hardener",
-    badge: "INDUSTRIAL GRADE",
-    context: "FLOORS · HIGH-TRAFFIC · INDUSTRIAL GRADE",
-    name: "Color Hardener",
-    tagline: "Industrial durability. Unexpected colour.",
-    description: [
-      "A dry-shake hardener pressed into fresh concrete to create a dense, coloured, abrasion-resistant surface.",
-      "This floor will outlast everything built on it. And it will look deliberate and designed while it does.",
-    ],
-    specs: [
-      { label: "Hardness", value: "Industrial-grade surface" },
-      { label: "Application Method", value: "Dry-shake on fresh concrete" },
-      { label: "Best For", value: "Retail, warehouses, garages" },
-      { label: "Colours", value: "40+ shades available" },
-      { label: "Traffic Rating", value: "Industrial heavy traffic" },
-      { label: "Coverage", value: "5–6 kg/m² standard application" },
-    ],
-    applications: ["Retail Floors", "Warehouses", "Garages", "Factory Floors", "Commercial Kitchens"],
-    toneCount: 5,
-    img: "https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=800&q=80",
-  },
-];
-
-const comparisonData = [
-  { name: "Microtopping", walls: true, floors: true, outdoor: true, waterproof: true, thickness: "1–3mm", bestUse: "Premium residential & commercial", complexity: "High — certified only" },
-  { name: "Metallic Finish", walls: true, floors: false, outdoor: false, waterproof: false, thickness: "1–2mm", bestUse: "Feature/statement walls", complexity: "Medium-High" },
-  { name: "Wallcrete", walls: true, floors: false, outdoor: true, waterproof: false, thickness: "2–4mm", bestUse: "Concrete aesthetic — any scale", complexity: "Medium" },
-  { name: "Cemwash", walls: true, floors: false, outdoor: true, waterproof: false, thickness: "Thin wash", bestUse: "Natural/organic character", complexity: "Low-Medium" },
-  { name: "Patio System", walls: false, floors: true, outdoor: true, waterproof: true, thickness: "System", bestUse: "Pool decks, outdoor terraces", complexity: "Medium" },
-  { name: "Color Hardener", walls: false, floors: true, outdoor: true, waterproof: false, thickness: "Integral", bestUse: "Industrial/commercial floors", complexity: "Medium" },
-];
-
-const toneColors = [
-  "hsl(30, 5%, 85%)", "hsl(30, 8%, 70%)", "hsl(30, 10%, 55%)", "hsl(30, 12%, 40%)",
-  "hsl(30, 8%, 30%)", "hsl(35, 15%, 75%)", "hsl(38, 20%, 60%)", "hsl(25, 10%, 50%)",
-  "hsl(20, 5%, 35%)", "hsl(30, 3%, 20%)",
-];
+import { products, wallProducts, floorProducts, toneColors, comparisonData, type ProductData } from "@/data/products";
 
 const ProductCard = ({ product, index }: { product: ProductData; index: number }) => {
   const isEven = index % 2 === 0;
@@ -214,7 +35,7 @@ const ProductCard = ({ product, index }: { product: ProductData; index: number }
             ))}
 
             <div className="grid grid-cols-2 gap-[2px] mt-8 mb-8">
-              {product.specs.map((spec) => (
+              {product.specs.slice(0, 6).map((spec) => (
                 <div key={spec.label} className="bg-card p-4">
                   <p className="text-[0.6rem] text-muted-foreground uppercase tracking-[0.24em] font-body mb-1" style={{ fontWeight: 400 }}>
                     {spec.label}
@@ -224,42 +45,12 @@ const ProductCard = ({ product, index }: { product: ProductData; index: number }
               ))}
             </div>
 
-            <div className="flex flex-wrap gap-[2px] mb-8">
-              {product.applications.map((app) => (
-                <span
-                  key={app}
-                  className="px-3 py-1.5 text-[0.6rem] tracking-[0.24em] uppercase font-body bg-card text-muted-foreground"
-                >
-                  {app}
-                </span>
-              ))}
-            </div>
-
-            <div className="mb-8">
-              <p className="text-[0.6rem] text-muted-foreground uppercase tracking-[0.24em] font-body mb-3" style={{ fontWeight: 400 }}>
-                Available Tones — Select to Explore
-              </p>
-              <div className="flex gap-1.5">
-                {toneColors.slice(0, product.toneCount).map((color, i) => (
-                  <div
-                    key={i}
-                    className="w-8 h-8 cursor-pointer hover:scale-110 transition-transform"
-                    style={{ backgroundColor: color, border: "1px solid rgba(63,63,62,.15)" }}
-                    title={`Tone ${i + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-
             <div className="flex flex-wrap gap-3">
-              <a href="#contact" className="bg-primary text-primary-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-gold-light transition-colors">
+              <Link to={`/products/${product.slug}`} className="bg-primary text-primary-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-gold-light transition-colors">
+                FULL DETAILS →
+              </Link>
+              <a href="#contact" className="border border-secondary-foreground/30 text-foreground px-6 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:border-foreground transition-colors">
                 REQUEST A SAMPLE →
-              </a>
-              <a href="#" className="border border-secondary-foreground/30 text-foreground px-6 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:border-foreground transition-colors">
-                TECHNICAL DATA →
-              </a>
-              <a href="#" className="border border-secondary-foreground/30 text-foreground px-6 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:border-foreground transition-colors">
-                WATCH VIDEO →
               </a>
             </div>
           </motion.div>
@@ -271,13 +62,15 @@ const ProductCard = ({ product, index }: { product: ProductData; index: number }
             transition={{ delay: 0.15, duration: 0.85, ease: [0,0,.2,1] }}
             className={`sticky top-[140px] ${!isEven ? "md:[direction:ltr]" : ""}`}
           >
-            <div className="overflow-hidden">
-              <img
-                src={product.img}
-                alt={`INCISE ${product.name}`}
-                className="w-full aspect-[4/5] object-cover"
-              />
-            </div>
+            <Link to={`/products/${product.slug}`}>
+              <div className="overflow-hidden">
+                <img
+                  src={product.img}
+                  alt={`INCISE ${product.name} — ${product.tagline}`}
+                  className="w-full aspect-[4/5] object-cover hover:scale-[1.02] transition-transform duration-700"
+                />
+              </div>
+            </Link>
           </motion.div>
         </div>
       </div>
@@ -345,9 +138,9 @@ const ComparisonTable = () => (
           <a href="#contact" className="bg-primary text-primary-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-gold-light transition-colors">
             START A CONVERSATION →
           </a>
-          <a href="#" className="border border-secondary-foreground/30 text-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:border-foreground transition-colors">
+          <Link to="/technical" className="border border-secondary-foreground/30 text-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:border-foreground transition-colors">
             VIEW TECHNICAL DATA →
-          </a>
+          </Link>
         </div>
       </motion.div>
     </div>
@@ -355,46 +148,16 @@ const ComparisonTable = () => (
 );
 
 const faqs = [
-  {
-    q: "What is microcement and how is it different from regular cement?",
-    a: "Microcement is an ultra-thin, polymer-modified cement-based coating applied at just 1–3mm thickness over existing surfaces. Unlike regular cement or screed, it creates a seamless, jointless finish that is both decorative and functional — available in 80+ colours with matte to high-gloss options. It doesn't require demolition of existing tiles or floors.",
-  },
-  {
-    q: "Can microcement be applied over existing tiles?",
-    a: "Yes. One of the biggest advantages of microcement is that it can be applied directly over existing tiles, screed, concrete, or plaster — eliminating the need for costly and time-consuming demolition. The surface must be properly primed and prepared by a certified INCISE applicator.",
-  },
-  {
-    q: "Is microcement waterproof? Can it be used in bathrooms and wet areas?",
-    a: "Yes — when correctly sealed with the INCISE polyurethane sealer system, microcement is fully waterproof and suitable for bathrooms, showers, wet rooms, swimming pool surrounds, and kitchen splashbacks. Proper sealing by a trained applicator is essential.",
-  },
-  {
-    q: "How long does a microcement floor or wall last?",
-    a: "A correctly applied and sealed INCISE microcement surface has a lifespan of 20+ years. Durability depends on proper substrate preparation, application by a certified applicator, correct sealer application, and appropriate maintenance.",
-  },
-  {
-    q: "Do I need a certified applicator to install INCISE products?",
-    a: "Yes. All INCISE microcement and decorative coating products must be applied by an INCISE-certified applicator who has completed training at the INCISE Academy. This ensures correct substrate preparation, product mixing, application technique, and sealing — and is required for any product warranty.",
-  },
-  {
-    q: "How much does microcement cost compared to tiles or natural stone?",
-    a: "Microcement is competitively priced with premium tiles and natural stone, but offers significant savings on labour, demolition, grouting, and waste disposal. The total installed cost — including material, application, and sealing — is typically comparable to or lower than high-end tiling when you factor in the seamless finish and reduced installation time.",
-  },
-  {
-    q: "What colours and finishes are available?",
-    a: "INCISE offers over 80 standard tones across its product range — from warm whites and sandy neutrals to deep charcoals and bold earth tones. Finishes range from matte (natural, organic feel) through satin to high-gloss (polished, contemporary look). Custom colour matching is available for larger projects.",
-  },
-  {
-    q: "Can INCISE products be used outdoors in Uganda's climate?",
-    a: "Yes. The INCISE Patio System and Color Hardener are specifically engineered for East Africa's tropical climate — UV-stable, non-slip, and rated for equatorial sun exposure. Wallcrete and Cemwash are also suitable for exterior walls. Products are tropics-tested, not imported from temperate-climate manufacturers.",
-  },
-  {
-    q: "How do I maintain a microcement surface?",
-    a: "Microcement surfaces are low-maintenance. Regular cleaning with a pH-neutral cleaner and periodic re-waxing (every 6–12 months for floors) is all that's needed. Avoid abrasive cleaners or acidic substances. INCISE provides a detailed aftercare guide with every installation.",
-  },
-  {
-    q: "Where can I see INCISE products in person or request samples?",
-    a: "Visit our showrooms in Kampala (Luzira Industrial Park) or Nairobi (Purshotam Place, Westlands). You can also request physical colour samples and product swatches delivered to your location. Contact us or use the 'Request a Sample' button on any product page.",
-  },
+  { q: "What is microcement and how is it different from regular cement?", a: "Microcement is an ultra-thin, polymer-modified cement-based coating applied at just 1–3mm thickness over existing surfaces. Unlike regular cement or screed, it creates a seamless, jointless finish that is both decorative and functional — available in 80+ colours with matte to high-gloss options." },
+  { q: "Can microcement be applied over existing tiles?", a: "Yes. One of the biggest advantages of microcement is that it can be applied directly over existing tiles, screed, concrete, or plaster — eliminating the need for costly and time-consuming demolition." },
+  { q: "Is microcement waterproof? Can it be used in bathrooms and wet areas?", a: "Yes — when correctly sealed with the INCISE polyurethane sealer system, microcement is fully waterproof and suitable for bathrooms, showers, wet rooms, swimming pool surrounds, and kitchen splashbacks." },
+  { q: "How long does a microcement floor or wall last?", a: "A correctly applied and sealed INCISE microcement surface has a lifespan of 20+ years. Durability depends on proper substrate preparation, application by a certified applicator, correct sealer application, and appropriate maintenance." },
+  { q: "Do I need a certified applicator to install INCISE products?", a: "Yes. All INCISE microcement and decorative coating products must be applied by an INCISE-certified applicator who has completed training at the INCISE Academy." },
+  { q: "How much does microcement cost compared to tiles or natural stone?", a: "Microcement is competitively priced with premium tiles and natural stone, but offers significant savings on labour, demolition, grouting, and waste disposal." },
+  { q: "What colours and finishes are available?", a: "INCISE offers over 80 standard tones across its product range — from warm whites and sandy neutrals to deep charcoals and bold earth tones. Finishes range from matte through satin to high-gloss." },
+  { q: "Can INCISE products be used outdoors in Uganda's climate?", a: "Yes. The INCISE Patio System, Terrace, and Color Hardener are specifically engineered for East Africa's tropical climate — UV-stable, non-slip, and rated for equatorial sun exposure." },
+  { q: "How do I maintain a microcement surface?", a: "Microcement surfaces are low-maintenance. Regular cleaning with a pH-neutral cleaner and periodic re-waxing (every 6–12 months for floors) is all that's needed." },
+  { q: "Where can I see INCISE products in person or request samples?", a: "Visit our showrooms in Kampala (Luzira Industrial Park) or Nairobi (Purshotam Place, Westlands). You can also request physical colour samples delivered to your location." },
 ];
 
 const FAQSection = () => {
@@ -403,57 +166,24 @@ const FAQSection = () => {
   return (
     <section id="faq" className="section-padding bg-secondary">
       <div className="max-w-[1400px] mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
           <p className="label-text mb-4">FREQUENTLY ASKED QUESTIONS</p>
           <h2 className="font-display text-3xl md:text-4xl text-foreground" style={{ fontWeight: 300 }}>
             Everything architects and clients <span className="italic text-gradient-gold">ask us.</span>
           </h2>
-          <p className="text-muted-foreground font-body text-[0.88rem] max-w-lg mx-auto mt-4" style={{ fontWeight: 300 }}>
-            Common questions about microcement, application, durability, and working with INCISE products in East Africa.
-          </p>
         </motion.div>
 
         <div className="max-w-3xl mx-auto">
           {faqs.map((faq, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.04 }}
-              className="border-b border-border"
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between py-5 text-left gap-4 group"
-              >
-                <h3 className="font-body text-[0.92rem] text-foreground group-hover:text-primary transition-colors" style={{ fontWeight: 400 }}>
-                  {faq.q}
-                </h3>
-                <ChevronDown
-                  size={18}
-                  className={`shrink-0 text-muted-foreground transition-transform duration-300 ${
-                    openIndex === i ? "rotate-180" : ""
-                  }`}
-                />
+            <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }} className="border-b border-border">
+              <button onClick={() => setOpenIndex(openIndex === i ? null : i)} className="w-full flex items-center justify-between py-5 text-left gap-4 group">
+                <h3 className="font-body text-[0.92rem] text-foreground group-hover:text-primary transition-colors" style={{ fontWeight: 400 }}>{faq.q}</h3>
+                <ChevronDown size={18} className={`shrink-0 text-muted-foreground transition-transform duration-300 ${openIndex === i ? "rotate-180" : ""}`} />
               </button>
               <AnimatePresence initial={false}>
                 {openIndex === i && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
-                    className="overflow-hidden"
-                  >
-                    <p className="text-muted-foreground font-body text-[0.86rem] leading-[1.95] pb-5 pr-10" style={{ fontWeight: 300 }}>
-                      {faq.a}
-                    </p>
+                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }} className="overflow-hidden">
+                    <p className="text-muted-foreground font-body text-[0.86rem] leading-[1.95] pb-5 pr-10" style={{ fontWeight: 300 }}>{faq.a}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -461,18 +191,9 @@ const FAQSection = () => {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mt-14"
-        >
-          <p className="text-muted-foreground font-body text-[0.88rem] mb-4" style={{ fontWeight: 300 }}>
-            Have a question we haven't answered?
-          </p>
-          <a href="#contact" className="bg-primary text-primary-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-gold-light transition-colors inline-block">
-            ASK OUR TEAM →
-          </a>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mt-14">
+          <p className="text-muted-foreground font-body text-[0.88rem] mb-4" style={{ fontWeight: 300 }}>Have a question we haven't answered?</p>
+          <a href="#contact" className="bg-primary text-primary-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-gold-light transition-colors inline-block">ASK OUR TEAM →</a>
         </motion.div>
       </div>
     </section>
@@ -480,13 +201,13 @@ const FAQSection = () => {
 };
 
 const ProductsPage = () => {
-  const [activeNav, setActiveNav] = useState("microtopping");
+  const [activeFilter, setActiveFilter] = useState<"all" | "wall" | "floor">("all");
 
-  const scrollToProduct = (key: string) => {
-    setActiveNav(key);
-    const el = document.getElementById(key);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  const filteredProducts = activeFilter === "all"
+    ? products
+    : activeFilter === "wall"
+    ? wallProducts
+    : floorProducts;
 
   return (
     <div className="min-h-screen bg-background">
@@ -499,15 +220,13 @@ const ProductsPage = () => {
           "@type": "ItemList",
           name: "INCISE Microcement & Decorative Coating Products",
           description: "Complete range of microcement and cement-based decorative wall and floor finishes by INCISE.",
-          numberOfItems: 6,
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Microtopping — Seamless Microcement Finish", url: "https://incisesite.lovable.app/products#microtopping" },
-            { "@type": "ListItem", position: 2, name: "Metallic Finish — Decorative Wall Coating", url: "https://incisesite.lovable.app/products#metallic" },
-            { "@type": "ListItem", position: 3, name: "Wallcrete — Cement-Based Wall Finish", url: "https://incisesite.lovable.app/products#wallcrete" },
-            { "@type": "ListItem", position: 4, name: "Cemwash — Mineral Wall Coating", url: "https://incisesite.lovable.app/products#cemwash" },
-            { "@type": "ListItem", position: 5, name: "Patio System — Outdoor Floor Coating", url: "https://incisesite.lovable.app/products#patio" },
-            { "@type": "ListItem", position: 6, name: "Color Hardener — Industrial Floor Finish", url: "https://incisesite.lovable.app/products#hardener" },
-          ],
+          numberOfItems: products.length,
+          itemListElement: products.map((p, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `INCISE ${p.name}`,
+            url: `https://incisesite.lovable.app/products/${p.slug}`,
+          })),
         }}
       />
       <Navbar />
@@ -516,9 +235,7 @@ const ProductsPage = () => {
       <section className="pt-[140px] pb-16 border-b border-border">
         <div className="max-w-[1400px] mx-auto px-6 md:px-[60px]">
           <div className="flex items-center gap-2 mb-5">
-            <Link to="/" className="text-muted-foreground hover:text-foreground text-[0.6rem] tracking-[0.24em] uppercase font-body transition-colors">
-              Home
-            </Link>
+            <Link to="/" className="text-muted-foreground hover:text-foreground text-[0.6rem] tracking-[0.24em] uppercase font-body transition-colors">Home</Link>
             <span className="text-muted-foreground/40 text-xs">›</span>
             <span className="label-text text-[0.6rem]">Products</span>
           </div>
@@ -542,21 +259,25 @@ const ProductsPage = () => {
             style={{ fontWeight: 300 }}
           >
             Every INCISE microcement and decorative coating is a complete, engineered system — not just a coating in a bag.
-            Primer, application, sealing, and aftercare for cement-based wall and floor finishes. One source. Full accountability.
+            Primer, application, sealing, and aftercare. One source. Full accountability.
           </motion.p>
         </div>
       </section>
 
-      {/* Sticky product nav */}
+      {/* Category filter */}
       <div className="sticky top-[76px] z-40 border-b border-border bg-background/95 backdrop-blur-md">
         <div className="max-w-[1400px] mx-auto px-6 md:px-[60px]">
           <div className="flex gap-[2px] overflow-x-auto py-3 scrollbar-hide">
-            {productNav.map((item) => (
+            {([
+              { key: "all", label: "ALL PRODUCTS" },
+              { key: "wall", label: "WALL PRODUCTS" },
+              { key: "floor", label: "FLOOR PRODUCTS" },
+            ] as const).map((item) => (
               <button
                 key={item.key}
-                onClick={() => scrollToProduct(item.key)}
+                onClick={() => setActiveFilter(item.key)}
                 className={`px-4 py-2.5 text-[0.68rem] tracking-[0.16em] uppercase font-body whitespace-nowrap transition-all ${
-                  activeNav === item.key
+                  activeFilter === item.key
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
@@ -564,11 +285,20 @@ const ProductsPage = () => {
                 {item.label}
               </button>
             ))}
+            <button
+              onClick={() => {
+                const el = document.getElementById("compare");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="px-4 py-2.5 text-[0.68rem] tracking-[0.16em] uppercase font-body whitespace-nowrap text-muted-foreground hover:text-foreground transition-all"
+            >
+              COMPARE ALL
+            </button>
           </div>
         </div>
       </div>
 
-      {products.map((product, i) => (
+      {filteredProducts.map((product, i) => (
         <ProductCard key={product.id} product={product} index={i} />
       ))}
 
