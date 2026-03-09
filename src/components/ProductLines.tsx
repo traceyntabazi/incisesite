@@ -1,18 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { products } from "@/data/products";
 
-const products = [
-  { name: "MICROTOPPING", tag: "SIGNATURE", desc: "Seamless, ultra-thin cementitious coating. Polished concrete aesthetic for walls, floors, and wet areas.", specs: { thickness: "1–3mm", finish: "Matte / Satin / Gloss", suitable: "Wet areas, floors, walls" } },
-  { name: "METALLIC", tag: "PREMIUM", desc: "Dimensional metallic coatings with bronze, copper, and silver finishes for dramatic feature surfaces.", specs: { thickness: "1–2mm", finish: "Shimmer / Brushed", suitable: "Feature walls, columns" } },
-  { name: "WALLCRETE", tag: "WALLS", desc: "Raw concrete aesthetic for walls. Industrial edge with controlled texture and depth.", specs: { thickness: "2–4mm", finish: "Natural / Textured", suitable: "Interior walls" } },
-  { name: "PATIO", tag: "OUTDOOR", desc: "UV-stable, slip-rated outdoor floor coatings designed for East African sun and rain.", specs: { thickness: "3–5mm", finish: "Brushed / Textured", suitable: "Pools, patios, driveways" } },
-  { name: "CEMWASH", tag: "ARTISAN", desc: "Hand-applied artisan wash for walls. Warm, organic tones with natural variation.", specs: { thickness: "1–2mm", finish: "Flat / Matte", suitable: "Interior walls" } },
-  { name: "COLOR HARDENER", tag: "COMMERCIAL", desc: "High-traffic coloured concrete hardener. Dense, durable, and UV-stable.", specs: { thickness: "2–3mm", finish: "Dense / Matte", suitable: "Commercial floors, driveways" } },
-];
+const displayProducts = products.slice(0, 6);
 
 const ProductLines = () => {
   const [active, setActive] = useState(0);
-  const p = products[active];
+  const p = displayProducts[active];
 
   return (
     <section id="products" className="section-padding bg-secondary">
@@ -30,7 +25,7 @@ const ProductLines = () => {
         </motion.div>
 
         <div className="flex flex-wrap justify-center gap-[2px] mb-12">
-          {products.map((prod, i) => (
+          {displayProducts.map((prod, i) => (
             <button
               key={i}
               onClick={() => setActive(i)}
@@ -53,28 +48,36 @@ const ProductLines = () => {
           className="grid md:grid-cols-2 gap-12 items-start"
         >
           <div>
-            <span className="label-text text-[10px]">{p.tag}</span>
+            <span className="label-text text-[10px]">{p.badge}</span>
             <h3 className="font-display text-4xl md:text-5xl text-foreground mt-2 mb-4" style={{ fontWeight: 300 }}>
               {p.name}
             </h3>
             <p className="text-secondary-foreground font-body leading-[1.95] mb-8" style={{ fontWeight: 300 }}>
-              {p.desc}
+              {p.description[0]}
             </p>
-            <a
-              href="/products"
-              className="inline-flex bg-foreground text-background px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-secondary-foreground transition-colors"
-            >
-              FULL PRODUCT DETAILS →
-            </a>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                to={`/products/${p.slug}`}
+                className="inline-flex bg-foreground text-background px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-secondary-foreground transition-colors"
+              >
+                FULL PRODUCT DETAILS →
+              </Link>
+              <Link
+                to="/products"
+                className="inline-flex border border-secondary-foreground/30 text-foreground px-6 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:border-foreground transition-colors"
+              >
+                ALL PRODUCTS →
+              </Link>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-[2px]">
-            {Object.entries(p.specs).map(([key, val]) => (
-              <div key={key} className="bg-card p-5">
+            {p.specs.slice(0, 3).map((spec) => (
+              <div key={spec.label} className="bg-card p-5">
                 <p className="text-[0.6rem] text-muted-foreground uppercase tracking-[0.24em] font-body mb-1" style={{ fontWeight: 400 }}>
-                  {key}
+                  {spec.label}
                 </p>
-                <p className="text-foreground font-body text-sm" style={{ fontWeight: 400 }}>{val}</p>
+                <p className="text-foreground font-body text-sm" style={{ fontWeight: 400 }}>{spec.value}</p>
               </div>
             ))}
             <div className="bg-card p-5">
