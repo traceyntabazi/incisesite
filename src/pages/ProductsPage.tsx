@@ -573,6 +573,7 @@ const ProductsPage = () => {
       ))}
 
       <ComparisonTable />
+      <FAQSection />
 
       <Footer />
     </div>
