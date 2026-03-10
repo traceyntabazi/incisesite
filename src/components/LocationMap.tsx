@@ -1,7 +1,5 @@
-import { useEffect, useMemo } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import { motion } from "framer-motion";
+import { MapPin } from "lucide-react";
 
 interface MapLocation {
   id: string;
@@ -14,42 +12,7 @@ interface MapLocation {
   address: string[];
 }
 
-const createIcon = (type: MapLocation["type"]) => {
-  const color = type === "hq" ? "#b8944f" : type === "office" ? "#b8944f" : "#8a7a5a";
-  const size = type === "hq" ? 18 : 14;
-
-  return L.divIcon({
-    className: "custom-marker",
-    html: `<div style="
-      width: ${size}px; height: ${size}px;
-      background: ${color};
-      border: 2px solid white;
-      border-radius: 50%;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      ${type === "hq" ? "animation: pulse 2s infinite;" : ""}
-    "></div>`,
-    iconSize: [size, size],
-    iconAnchor: [size / 2, size / 2],
-  });
-};
-
-const FitBounds = ({ locations }: { locations: MapLocation[] }) => {
-  const map = useMap();
-  
-  const boundsKey = useMemo(
-    () => locations.map((l) => `${l.lat},${l.lng}`).join("|"),
-    [locations]
-  );
-
-  useEffect(() => {
-    if (locations.length === 0) return;
-    const bounds = L.latLngBounds(locations.map((l) => [l.lat, l.lng] as [number, number]));
-    map.fitBounds(bounds, { padding: [60, 60], maxZoom: 8 });
-  }, [boundsKey, map]);
-
-  return null;
-};
-
+// Simple visual map replacement — styled pins on a decorative background
 const LocationMap = ({
   locations,
   onMarkerClick,
@@ -57,67 +20,84 @@ const LocationMap = ({
   locations: MapLocation[];
   onMarkerClick?: (id: string) => void;
 }) => {
+  // Normalize lat/lng to percentage positions on the container
+  const lats = locations.map((l) => l.lat);
+  const lngs = locations.map((l) => l.lng);
+  const minLat = Math.min(...lats) - 1.5;
+  const maxLat = Math.max(...lats) + 1.5;
+  const minLng = Math.min(...lngs) - 2;
+  const maxLng = Math.max(...lngs) + 2;
+
+  const toPosition = (lat: number, lng: number) => ({
+    top: `${((maxLat - lat) / (maxLat - minLat)) * 100}%`,
+    left: `${((lng - minLng) / (maxLng - minLng)) * 100}%`,
+  });
+
   return (
-    <>
-      <style>{`
-        .custom-marker { background: none !important; border: none !important; }
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.3); }
-        }
-        .leaflet-popup-content-wrapper {
-          background: hsl(30, 9%, 14%) !important;
-          color: white !important;
-          border-radius: 0 !important;
-          box-shadow: 0 8px 32px rgba(0,0,0,0.3) !important;
-          font-family: 'Jost', sans-serif !important;
-        }
-        .leaflet-popup-tip { background: hsl(30, 9%, 14%) !important; }
-        .leaflet-popup-close-button { color: white !important; }
-        .leaflet-popup-content { margin: 12px 16px !important; }
-      `}</style>
-      <MapContainer
-        center={[-0.5, 34.5]}
-        zoom={6}
-        scrollWheelZoom={false}
-        className="w-full h-full"
-        style={{ background: "hsl(36, 33%, 97%)" }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-        />
-        <FitBounds locations={locations} />
-        {locations.map((loc) => (
-          <Marker
+    <div className="relative w-full h-full bg-muted/30 overflow-hidden">
+      {/* Decorative grid */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Label */}
+      <div className="absolute top-6 left-6 z-10">
+        <p className="text-[0.58rem] tracking-[0.22em] uppercase font-body text-muted-foreground" style={{ fontWeight: 400 }}>
+          East Africa
+        </p>
+      </div>
+
+      {/* Location pins */}
+      {locations.map((loc, i) => {
+        const pos = toPosition(loc.lat, loc.lng);
+        const isHQ = loc.type === "hq";
+
+        return (
+          <motion.div
             key={loc.id}
-            position={[loc.lat, loc.lng]}
-            icon={createIcon(loc.type)}
-            eventHandlers={
-              onMarkerClick
-                ? { click: () => onMarkerClick(loc.id) }
-                : undefined
-            }
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: i * 0.1, duration: 0.4, type: "spring" }}
+            className="absolute -translate-x-1/2 -translate-y-1/2 group cursor-pointer z-10"
+            style={{ top: pos.top, left: pos.left }}
+            onClick={() => onMarkerClick?.(loc.id)}
           >
-            <Popup>
-              <div>
-                <p style={{ fontSize: "0.55rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.5, marginBottom: 4 }}>
-                  {loc.type === "hq" ? "Headquarters" : loc.type === "office" ? "Regional Office" : "Distributor"}
+            {/* Pulse ring for HQ */}
+            {isHQ && (
+              <span className="absolute inset-0 w-10 h-10 -translate-x-[25%] -translate-y-[25%] rounded-full bg-primary/20 animate-ping" />
+            )}
+
+            {/* Pin */}
+            <div
+              className={`relative flex items-center justify-center rounded-full border-2 border-background shadow-lg transition-transform duration-300 group-hover:scale-125 ${
+                isHQ ? "w-10 h-10 bg-primary" : "w-7 h-7 bg-primary/80"
+              }`}
+            >
+              <MapPin className={`text-primary-foreground ${isHQ ? "w-4 h-4" : "w-3 h-3"}`} />
+            </div>
+
+            {/* Tooltip */}
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+              <div className="bg-card border border-border px-4 py-2.5 shadow-xl">
+                <p className="text-[0.6rem] tracking-[0.18em] uppercase font-body text-primary" style={{ fontWeight: 500 }}>
+                  {loc.type === "hq" ? "HQ" : loc.type === "office" ? "Office" : "Distributor"}
                 </p>
-                <p style={{ fontSize: "0.95rem", fontFamily: "'Cormorant', serif", fontWeight: 400, marginBottom: 4 }}>
+                <p className="font-display text-sm text-foreground" style={{ fontWeight: 400 }}>
                   {loc.name}
                 </p>
-                <p style={{ fontSize: "0.75rem", opacity: 0.6, fontWeight: 300 }}>
-                  {loc.address.join(", ")}
-                  <br />
+                <p className="text-[0.7rem] font-body text-muted-foreground" style={{ fontWeight: 300 }}>
                   {loc.city}, {loc.country}
                 </p>
               </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-    </>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
   );
 };
 
