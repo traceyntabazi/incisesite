@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -35,11 +35,18 @@ const createIcon = (type: MapLocation["type"]) => {
 
 const FitBounds = ({ locations }: { locations: MapLocation[] }) => {
   const map = useMap();
+  
+  const boundsKey = useMemo(
+    () => locations.map((l) => `${l.lat},${l.lng}`).join("|"),
+    [locations]
+  );
+
   useEffect(() => {
     if (locations.length === 0) return;
-    const bounds = L.latLngBounds(locations.map((l) => [l.lat, l.lng]));
+    const bounds = L.latLngBounds(locations.map((l) => [l.lat, l.lng] as [number, number]));
     map.fitBounds(bounds, { padding: [60, 60], maxZoom: 8 });
-  }, [locations, map]);
+  }, [boundsKey, map]);
+
   return null;
 };
 
@@ -86,9 +93,11 @@ const LocationMap = ({
             key={loc.id}
             position={[loc.lat, loc.lng]}
             icon={createIcon(loc.type)}
-            eventHandlers={{
-              click: () => onMarkerClick?.(loc.id),
-            }}
+            eventHandlers={
+              onMarkerClick
+                ? { click: () => onMarkerClick(loc.id) }
+                : undefined
+            }
           >
             <Popup>
               <div>
