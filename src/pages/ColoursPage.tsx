@@ -1,84 +1,20 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, Eye, Layers, Palette, Sparkles } from "lucide-react";
+import { Search, X, Eye, Layers, Sparkles, Palette } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
+import ColourPreview from "@/components/colours/ColourPreview";
+import {
+  microColours,
+  colourRanges,
+  rangeDescriptions,
+  type ColourRange,
+  type MicroColour,
+} from "@/components/colours/ColourData";
 
-/* ── colour data ── */
-type ColourFamily = "Neutrals" | "Earths" | "Stones" | "Metals" | "Botanicals" | "Oceans";
-
-interface Colour {
-  name: string;
-  hex: string;
-  family: ColourFamily;
-  products: string[];
-  mood: string;
-}
-
-const colours: Colour[] = [
-  // Neutrals
-  { name: "Ivory Veil", hex: "#F5F0E8", family: "Neutrals", products: ["Microtopping", "Wallcrete", "Cemwash"], mood: "Calm" },
-  { name: "Bone Dust", hex: "#E8E0D4", family: "Neutrals", products: ["Microtopping", "Wallcrete"], mood: "Warm" },
-  { name: "Linen Haze", hex: "#DDD5C8", family: "Neutrals", products: ["Microtopping", "Cemwash"], mood: "Soft" },
-  { name: "Parchment", hex: "#D4C9B8", family: "Neutrals", products: ["Microtopping", "Wallcrete", "Patio"], mood: "Classic" },
-  { name: "Sandrift", hex: "#C8B99A", family: "Neutrals", products: ["Microtopping", "Patio"], mood: "Warm" },
-  { name: "Cloud Milk", hex: "#F0ECE4", family: "Neutrals", products: ["Wallcrete", "Cemwash"], mood: "Airy" },
-  { name: "Cotton Stone", hex: "#E2D9CC", family: "Neutrals", products: ["Microtopping"], mood: "Gentle" },
-  
-  // Earths
-  { name: "Savanna Clay", hex: "#B8845A", family: "Earths", products: ["Microtopping", "Patio", "Color Hardener"], mood: "Grounded" },
-  { name: "Kilimanjaro Dust", hex: "#A67B5B", family: "Earths", products: ["Microtopping", "Patio"], mood: "Warm" },
-  { name: "Burnt Sienna", hex: "#9E6B4A", family: "Earths", products: ["Wallcrete", "Cemwash"], mood: "Rich" },
-  { name: "Terracotta Fade", hex: "#C4885A", family: "Earths", products: ["Microtopping", "Cemwash"], mood: "Earthy" },
-  { name: "Amber Oxide", hex: "#B07840", family: "Earths", products: ["Color Hardener", "Patio"], mood: "Bold" },
-  { name: "Rift Valley", hex: "#8B6842", family: "Earths", products: ["Microtopping", "Wallcrete"], mood: "Deep" },
-  { name: "Ochre Blush", hex: "#D4A56A", family: "Earths", products: ["Cemwash", "Wallcrete"], mood: "Golden" },
-  
-  // Stones
-  { name: "Limestone Pale", hex: "#D1C9BC", family: "Stones", products: ["Microtopping", "Patio"], mood: "Refined" },
-  { name: "Pumice Grey", hex: "#B5AFA6", family: "Stones", products: ["Microtopping", "Color Hardener"], mood: "Cool" },
-  { name: "Granite Mist", hex: "#9E9890", family: "Stones", products: ["Microtopping", "Wallcrete"], mood: "Urban" },
-  { name: "Basalt Shadow", hex: "#6B6560", family: "Stones", products: ["Microtopping", "Color Hardener"], mood: "Dramatic" },
-  { name: "Slate Whisper", hex: "#7A7570", family: "Stones", products: ["Wallcrete", "Microtopping"], mood: "Moody" },
-  { name: "Quartzite", hex: "#C5BDB0", family: "Stones", products: ["Microtopping", "Patio"], mood: "Neutral" },
-  { name: "Obsidian", hex: "#3A3632", family: "Stones", products: ["Microtopping", "Wallcrete"], mood: "Bold" },
-  
-  // Metals
-  { name: "Aged Bronze", hex: "#8B7355", family: "Metals", products: ["Metallic"], mood: "Opulent" },
-  { name: "Brushed Copper", hex: "#B87A56", family: "Metals", products: ["Metallic"], mood: "Warm" },
-  { name: "Patina Green", hex: "#6B8E6B", family: "Metals", products: ["Metallic"], mood: "Heritage" },
-  { name: "Liquid Silver", hex: "#A8A8A8", family: "Metals", products: ["Metallic"], mood: "Modern" },
-  { name: "Champagne Foil", hex: "#C9B88C", family: "Metals", products: ["Metallic"], mood: "Luxe" },
-  { name: "Iron Rust", hex: "#8B5E3C", family: "Metals", products: ["Metallic"], mood: "Raw" },
-  
-  // Botanicals
-  { name: "Sage Dusk", hex: "#9CAF8B", family: "Botanicals", products: ["Wallcrete", "Cemwash"], mood: "Restful" },
-  { name: "Moss Stone", hex: "#7A8B6A", family: "Botanicals", products: ["Wallcrete"], mood: "Organic" },
-  { name: "Olive Mist", hex: "#A09A6A", family: "Botanicals", products: ["Cemwash", "Wallcrete"], mood: "Natural" },
-  { name: "Eucalyptus", hex: "#8BA8A0", family: "Botanicals", products: ["Wallcrete", "Cemwash"], mood: "Fresh" },
-  { name: "Dried Herb", hex: "#B5A888", family: "Botanicals", products: ["Cemwash"], mood: "Calm" },
-  
-  // Oceans
-  { name: "Coastal Fog", hex: "#A0AAB0", family: "Oceans", products: ["Microtopping", "Wallcrete"], mood: "Serene" },
-  { name: "Storm Blue", hex: "#6A7B88", family: "Oceans", products: ["Wallcrete"], mood: "Dramatic" },
-  { name: "Pearl Bay", hex: "#B8C0C4", family: "Oceans", products: ["Microtopping", "Wallcrete"], mood: "Light" },
-  { name: "Deep Current", hex: "#4A5B68", family: "Oceans", products: ["Wallcrete", "Microtopping"], mood: "Intense" },
-  { name: "Tidal Sand", hex: "#C5BCA8", family: "Oceans", products: ["Microtopping", "Patio"], mood: "Coastal" },
-];
-
-const families: ColourFamily[] = ["Neutrals", "Earths", "Stones", "Metals", "Botanicals", "Oceans"];
-
-const familyDescriptions: Record<ColourFamily, string> = {
-  Neutrals: "The quiet foundation. Tones that let architecture speak, textures breathe, and light do the work.",
-  Earths: "Born from the African landscape. Warm pigments that anchor a space and connect it to the ground beneath.",
-  Stones: "Mineral-inspired depth. From pale limestone to volcanic basalt — surfaces that feel carved, not coated.",
-  Metals: "Dimensional shimmer. Bronze, copper, and silver finishes that catch light and shift with perspective.",
-  Botanicals: "Drawn from leaf and stem. Greens and olives that bring life to interior walls without overwhelming.",
-  Oceans: "Coastal atmospherics. Blue-grey tones that evoke horizon lines and open water.",
-};
-
-const ColourCard = ({ colour, onClick }: { colour: Colour; onClick: () => void }) => (
+/* ── Textured swatch card ── */
+const ColourCard = ({ colour, onClick }: { colour: MicroColour; onClick: () => void }) => (
   <motion.button
     onClick={onClick}
     className="group text-left"
@@ -88,104 +24,138 @@ const ColourCard = ({ colour, onClick }: { colour: Colour; onClick: () => void }
     layout
   >
     <div
-      className="aspect-[3/4] w-full mb-3 border border-border/40 transition-all duration-300 group-hover:shadow-lg group-hover:scale-[1.02]"
+      className="aspect-square w-full mb-3 border border-border/30 transition-all duration-300 group-hover:shadow-lg group-hover:scale-[1.02] relative overflow-hidden"
       style={{ backgroundColor: colour.hex }}
-    />
+    >
+      {/* SVG noise overlay for microcement texture */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E")`,
+          backgroundSize: "256px 256px",
+        }}
+      />
+      {/* Subtle trowel-mark overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.012 0.04' numOctaves='2' seed='5'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E")`,
+          backgroundSize: "400px 400px",
+        }}
+      />
+      {/* Hover eye icon */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="w-10 h-10 rounded-full flex items-center justify-center"
+          style={{
+            backgroundColor: isLightColor(colour.hex) ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.15)",
+          }}
+        >
+          <Eye size={16} style={{ color: isLightColor(colour.hex) ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.7)" }} />
+        </div>
+      </div>
+    </div>
     <p className="font-display text-base text-foreground" style={{ fontWeight: 400 }}>
       {colour.name}
     </p>
-    <p className="text-[0.62rem] tracking-[0.14em] uppercase text-muted-foreground font-body mt-0.5">
-      {colour.family} · {colour.mood}
+    <p className="text-[0.58rem] tracking-[0.12em] uppercase text-muted-foreground font-body mt-0.5">
+      {colour.hex.toUpperCase()}
     </p>
   </motion.button>
 );
 
-const ColourDetail = ({ colour, onClose }: { colour: Colour; onClose: () => void }) => (
-  <motion.div
-    className="fixed inset-0 z-[70] flex items-center justify-center p-4"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-  >
-    <div className="absolute inset-0 bg-foreground/60 backdrop-blur-sm" onClick={onClose} />
+/* ── Range section with its colours ── */
+const RangeSection = ({
+  range,
+  colours,
+  onSelect,
+}: {
+  range: ColourRange;
+  colours: MicroColour[];
+  onSelect: (c: MicroColour) => void;
+}) => {
+  const info = rangeDescriptions[range];
+  return (
     <motion.div
-      className="relative bg-card max-w-[720px] w-full grid md:grid-cols-2 overflow-hidden border border-border"
-      initial={{ scale: 0.95, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ scale: 0.95, opacity: 0 }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6 }}
+      className="mb-20"
     >
-      <div className="aspect-square md:aspect-auto" style={{ backgroundColor: colour.hex }} />
-      <div className="p-8 md:p-10 flex flex-col justify-center">
-        <button onClick={onClose} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground">
-          <X size={20} />
-        </button>
-        <p className="label-text text-[10px] mb-2">{colour.family}</p>
-        <h3 className="font-display text-3xl md:text-4xl text-foreground mb-1" style={{ fontWeight: 300 }}>
-          {colour.name}
-        </h3>
-        <p className="text-muted-foreground font-body text-sm mb-6">{colour.hex.toUpperCase()}</p>
-
-        <div className="space-y-4">
-          <div>
-            <p className="text-[0.6rem] uppercase tracking-[0.2em] text-muted-foreground font-body mb-1.5">Mood</p>
-            <p className="text-foreground font-body text-sm" style={{ fontWeight: 300 }}>{colour.mood}</p>
-          </div>
-          <div>
-            <p className="text-[0.6rem] uppercase tracking-[0.2em] text-muted-foreground font-body mb-1.5">Available in</p>
-            <div className="flex flex-wrap gap-1.5">
-              {colour.products.map((p) => (
-                <span key={p} className="px-3 py-1 bg-secondary text-secondary-foreground text-[0.62rem] tracking-[0.1em] uppercase font-body">
-                  {p}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div>
-            <p className="text-[0.6rem] uppercase tracking-[0.2em] text-muted-foreground font-body mb-1.5">Pairs with</p>
-            <p className="text-foreground font-body text-sm" style={{ fontWeight: 300 }}>
-              {colours
-                .filter((c) => c.family === colour.family && c.name !== colour.name)
-                .slice(0, 3)
-                .map((c) => c.name)
-                .join(", ")}
-            </p>
-          </div>
+      <div className="flex items-start gap-4 mb-6">
+        <div className="w-8 h-[1px] mt-3" style={{ backgroundColor: "hsl(var(--caramel))" }} />
+        <div>
+          <p className="label-text text-[10px] mb-1">{info.subtitle}</p>
+          <h3 className="font-display text-2xl md:text-3xl text-foreground" style={{ fontWeight: 300 }}>
+            {info.title}
+          </h3>
+          <p className="font-body text-sm text-secondary-foreground leading-[1.85] mt-2 max-w-[500px]" style={{ fontWeight: 300 }}>
+            {info.description}
+          </p>
         </div>
+      </div>
 
-        <a
-          href="#contact"
-          className="mt-8 inline-flex bg-primary text-primary-foreground px-6 py-3 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-gold-light transition-colors self-start"
-        >
-          Request sample →
-        </a>
+      {/* Colour strip — full width preview */}
+      <div className="flex gap-[2px] h-3 mb-6">
+        {colours.map((c) => (
+          <div
+            key={c.id}
+            className="flex-1 relative overflow-hidden cursor-pointer hover:flex-[2] transition-all duration-300"
+            style={{ backgroundColor: c.hex }}
+            onClick={() => onSelect(c)}
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E")`,
+              }}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Cards */}
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-x-3 gap-y-6">
+        {colours.map((c) => (
+          <ColourCard key={c.id} colour={c} onClick={() => onSelect(c)} />
+        ))}
       </div>
     </motion.div>
-  </motion.div>
-);
+  );
+};
 
-/* ── main page ── */
+/* ── Main page ── */
 const ColoursPage = () => {
-  const [activeFamily, setActiveFamily] = useState<ColourFamily | "All">("All");
+  const [selected, setSelected] = useState<MicroColour | null>(null);
   const [search, setSearch] = useState("");
-  const [selected, setSelected] = useState<Colour | null>(null);
+  const [activeRange, setActiveRange] = useState<ColourRange | "All">("All");
 
-  const filtered = useMemo(() => {
-    return colours.filter((c) => {
-      const matchFamily = activeFamily === "All" || c.family === activeFamily;
-      const matchSearch =
-        !search ||
-        c.name.toLowerCase().includes(search.toLowerCase()) ||
-        c.mood.toLowerCase().includes(search.toLowerCase()) ||
-        c.products.some((p) => p.toLowerCase().includes(search.toLowerCase()));
-      return matchFamily && matchSearch;
-    });
-  }, [activeFamily, search]);
+  const filteredByRange = useMemo(() => {
+    let base = microColours;
+    if (search) {
+      const q = search.toLowerCase();
+      base = base.filter(
+        (c) =>
+          c.name.toLowerCase().includes(q) ||
+          c.description.toLowerCase().includes(q) ||
+          c.products.some((p) => p.toLowerCase().includes(q))
+      );
+    }
+    return base;
+  }, [search]);
+
+  const showRanges = activeRange === "All";
+
+  const flatFiltered = useMemo(() => {
+    if (activeRange === "All") return filteredByRange;
+    return filteredByRange.filter((c) => c.range === activeRange);
+  }, [filteredByRange, activeRange]);
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Microcement Colour Palette — 80+ Tones | INCISE East Africa"
-        description="Explore INCISE's curated microcement colour palette — over 80 tones across neutrals, earths, stones, metals, botanicals, and ocean hues for cement-based wall and floor finishes."
+        title="Microcement Colour Palette — Natural Tones | INCISE East Africa"
+        description="Explore INCISE's microcement colour system — natural mineral tones across five ranges: warm sands, earth & clay, oxide, concrete, and botanical greens."
         canonical="https://incisesite.lovable.app/colours"
       />
       <Navbar />
@@ -199,27 +169,42 @@ const ColoursPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
             >
-              <p className="label-text mb-5">COLOUR STUDIO</p>
+              <p className="label-text mb-5">THE ART OF HARMONY</p>
               <h1 className="font-display text-4xl md:text-6xl lg:text-7xl mb-6" style={{ fontWeight: 300, color: "hsl(var(--warm-white))" }}>
-                Colour shapes how a space <br className="hidden md:block" />
-                <span className="italic text-gradient-gold">is felt.</span>
+                Material, texture <br className="hidden md:block" />
+                <span className="italic text-gradient-gold">& colour.</span>
               </h1>
-              <p className="font-body text-sm md:text-base max-w-[620px] leading-[1.95] opacity-70" style={{ fontWeight: 300, color: "hsl(var(--warm-white))" }}>
-                Before a hand touches a wall or a foot meets a floor, colour has already told the story.
-                It sets the emotional register of a room — intimate or expansive, grounded or luminous.
-                Our palette is crafted for the textures of cementitious surfaces, where pigment and mineral unite.
+              <p className="font-body text-sm md:text-base max-w-[640px] leading-[1.95] opacity-70" style={{ fontWeight: 300, color: "hsl(var(--warm-white))" }}>
+                Microcement colours are not like paint. They are mineral pigments bound in cement — 
+                creating surfaces with natural depth, subtle variation, and tactile character 
+                that shifts with light and touch. Each tone is designed to be combined 
+                within its range or across ranges for perfect harmony.
               </p>
             </motion.div>
 
-            {/* Colour emotion strip */}
+            {/* Colour emotion strip — all ranges */}
             <motion.div
               className="mt-12 flex gap-[2px] h-20 md:h-28 overflow-hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.8 }}
             >
-              {colours.filter((_, i) => i % 3 === 0).map((c) => (
-                <div key={c.name} className="flex-1 transition-all duration-300 hover:flex-[3] cursor-pointer" style={{ backgroundColor: c.hex }} title={c.name} />
+              {microColours.filter((_, i) => i % 2 === 0).map((c) => (
+                <div
+                  key={c.id}
+                  className="flex-1 transition-all duration-500 hover:flex-[3] cursor-pointer relative overflow-hidden"
+                  style={{ backgroundColor: c.hex }}
+                  onClick={() => setSelected(c)}
+                  title={c.name}
+                >
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E")`,
+                      backgroundSize: "256px 256px",
+                    }}
+                  />
+                </div>
               ))}
             </motion.div>
           </div>
@@ -230,9 +215,9 @@ const ColoursPage = () => {
       <section className="section-padding bg-secondary">
         <div className="max-w-[1400px] mx-auto grid md:grid-cols-3 gap-10 md:gap-16">
           {[
-            { icon: Eye, title: "Perception", text: "Colour changes how we perceive scale, warmth, and depth. A single shade can make a room feel twice its size — or half." },
-            { icon: Layers, title: "Texture & Tone", text: "On cementitious surfaces, colour behaves differently. Pigments interact with mineral substrates, creating movement no paint can replicate." },
-            { icon: Sparkles, title: "Bespoke Palettes", text: "Every project is unique. We develop custom colour formulations to match the architect's vision and the space's natural light." },
+            { icon: Eye, title: "Perception", text: "Microcement is not flat colour. Natural mineral pigments create depth, variation, and organic movement across every surface — no two square metres are identical." },
+            { icon: Layers, title: "Texture & Tone", text: "Colour behaves differently on cementitious surfaces. Pigments bond with mineral substrates, creating tonal shifts that paint systems simply cannot replicate." },
+            { icon: Sparkles, title: "Five Ranges", text: "Our colour system is organized into five harmonious ranges — Yellow, Orange, Red, Blue, Green — designed for perfect tone-on-tone combinations in any direction." },
           ].map((item) => (
             <motion.div
               key={item.title}
@@ -248,8 +233,73 @@ const ColoursPage = () => {
         </div>
       </section>
 
+      {/* ── How to read the colour system ── */}
+      <section className="section-padding">
+        <div className="max-w-[1400px] mx-auto text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <p className="label-text mb-4">THE COLOUR SYSTEM</p>
+            <h2 className="font-display text-3xl md:text-5xl text-foreground mb-4" style={{ fontWeight: 300 }}>
+              Five ranges. <span className="italic text-gradient-gold">Perfect harmony.</span>
+            </h2>
+            <p className="font-body text-sm text-secondary-foreground max-w-[620px] mx-auto leading-[1.85]" style={{ fontWeight: 300 }}>
+              Within each range, colours move from light to dark. Combine horizontally for tone-on-tone harmony, 
+              or vertically across ranges for colours of the same intensity. Either direction — 
+              you always achieve balance.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Matrix preview — 5 ranges as rows */}
+        <div className="max-w-[1400px] mx-auto mb-20">
+          <div className="space-y-[2px]">
+            {colourRanges.map((range) => {
+              const rangeColours = microColours.filter((c) => c.range === range);
+              return (
+                <motion.div
+                  key={range}
+                  className="flex gap-[2px]"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                >
+                  {rangeColours.map((c) => (
+                    <button
+                      key={c.id}
+                      className="flex-1 h-16 md:h-20 relative overflow-hidden transition-all duration-300 hover:flex-[2] group"
+                      style={{ backgroundColor: c.hex }}
+                      onClick={() => setSelected(c)}
+                      title={`${c.name} — ${c.hex}`}
+                    >
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E")`,
+                        }}
+                      />
+                      <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[0.45rem] font-body opacity-0 group-hover:opacity-70 transition-opacity whitespace-nowrap"
+                        style={{ color: isLightColor(c.hex) ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.6)" }}
+                      >
+                        {c.name}
+                      </span>
+                    </button>
+                  ))}
+                </motion.div>
+              );
+            })}
+          </div>
+          <div className="flex justify-between mt-3">
+            <p className="text-[0.5rem] tracking-[0.2em] uppercase text-muted-foreground font-body">← Light</p>
+            <p className="text-[0.5rem] tracking-[0.2em] uppercase text-muted-foreground font-body">Dark →</p>
+          </div>
+        </div>
+      </section>
+
       {/* ── Colour Explorer ── */}
-      <section id="explore" className="section-padding">
+      <section id="explore" className="section-padding pt-0">
         <div className="max-w-[1400px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -259,7 +309,7 @@ const ColoursPage = () => {
           >
             <p className="label-text mb-4">EXPLORE THE PALETTE</p>
             <h2 className="font-display text-3xl md:text-5xl text-foreground" style={{ fontWeight: 300 }}>
-              Find your <span className="italic text-gradient-gold">tone.</span>
+              Click any colour to <span className="italic text-gradient-gold">feel the surface.</span>
             </h2>
           </motion.div>
 
@@ -267,22 +317,27 @@ const ColoursPage = () => {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-10">
             <div className="flex flex-wrap gap-[2px]">
               <button
-                onClick={() => setActiveFamily("All")}
+                onClick={() => setActiveRange("All")}
                 className={`px-4 py-2.5 text-[0.62rem] tracking-[0.16em] uppercase font-body transition-all ${
-                  activeFamily === "All" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"
+                  activeRange === "All" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"
                 }`}
               >
-                All
+                All Ranges
               </button>
-              {families.map((f) => (
+              {colourRanges.map((r) => (
                 <button
-                  key={f}
-                  onClick={() => setActiveFamily(f)}
-                  className={`px-4 py-2.5 text-[0.62rem] tracking-[0.16em] uppercase font-body transition-all ${
-                    activeFamily === f ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"
+                  key={r}
+                  onClick={() => setActiveRange(r)}
+                  className={`px-4 py-2.5 text-[0.62rem] tracking-[0.16em] uppercase font-body transition-all flex items-center gap-2 ${
+                    activeRange === r ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {f}
+                  {/* Range colour dot */}
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: microColours.find((c) => c.range === r && c.intensity === "mid")?.hex }}
+                  />
+                  {rangeDescriptions[r].title}
                 </button>
               ))}
             </div>
@@ -293,7 +348,7 @@ const ColoursPage = () => {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search colours, moods, products…"
+                placeholder="Search colours, products…"
                 className="w-full pl-9 pr-4 py-2.5 bg-secondary border border-border text-foreground text-[0.75rem] font-body placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
               />
               {search && (
@@ -304,40 +359,52 @@ const ColoursPage = () => {
             </div>
           </div>
 
-          {/* Family description */}
-          <AnimatePresence mode="wait">
-            {activeFamily !== "All" && (
-              <motion.p
-                key={activeFamily}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                className="font-body text-sm text-secondary-foreground mb-10 max-w-[600px] leading-[1.85]"
-                style={{ fontWeight: 300 }}
-              >
-                {familyDescriptions[activeFamily]}
-              </motion.p>
-            )}
-          </AnimatePresence>
-
           {/* Count */}
-          <p className="text-[0.62rem] tracking-[0.14em] uppercase text-muted-foreground font-body mb-6">
-            {filtered.length} colour{filtered.length !== 1 ? "s" : ""}
+          <p className="text-[0.62rem] tracking-[0.14em] uppercase text-muted-foreground font-body mb-8">
+            {flatFiltered.length} colour{flatFiltered.length !== 1 ? "s" : ""}
           </p>
 
-          {/* Grid */}
-          <motion.div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-8" layout>
-            <AnimatePresence mode="popLayout">
-              {filtered.map((c) => (
-                <ColourCard key={c.name} colour={c} onClick={() => setSelected(c)} />
-              ))}
-            </AnimatePresence>
-          </motion.div>
+          {/* Render by range or flat */}
+          {showRanges && !search ? (
+            colourRanges.map((range) => {
+              const rangeColours = filteredByRange.filter((c) => c.range === range);
+              if (rangeColours.length === 0) return null;
+              return (
+                <RangeSection
+                  key={range}
+                  range={range}
+                  colours={rangeColours}
+                  onSelect={setSelected}
+                />
+              );
+            })
+          ) : (
+            <>
+              {activeRange !== "All" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-8"
+                >
+                  <p className="font-body text-sm text-secondary-foreground leading-[1.85] max-w-[600px]" style={{ fontWeight: 300 }}>
+                    {rangeDescriptions[activeRange as ColourRange].description}
+                  </p>
+                </motion.div>
+              )}
+              <motion.div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-x-3 gap-y-6" layout>
+                <AnimatePresence mode="popLayout">
+                  {flatFiltered.map((c) => (
+                    <ColourCard key={c.id} colour={c} onClick={() => setSelected(c)} />
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+            </>
+          )}
 
-          {filtered.length === 0 && (
+          {flatFiltered.length === 0 && (
             <div className="text-center py-20">
               <Palette size={40} className="text-muted-foreground mx-auto mb-4" strokeWidth={1} />
-              <p className="font-body text-muted-foreground text-sm">No colours match your search. Try a different term.</p>
+              <p className="font-body text-muted-foreground text-sm">No colours match your search.</p>
             </div>
           )}
         </div>
@@ -352,18 +419,18 @@ const ColoursPage = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <p className="label-text mb-4">THE SCIENCE OF COLOUR</p>
+            <p className="label-text mb-4">MATERIAL & COLOUR</p>
             <h2 className="font-display text-3xl md:text-5xl" style={{ fontWeight: 300, color: "hsl(var(--warm-white))" }}>
-              Why colour <span className="italic text-gradient-gold">matters.</span>
+              Why microcement colour <span className="italic text-gradient-gold">is different.</span>
             </h2>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-[2px]">
             {[
-              { title: "Warm tones ground a space", body: "Earths, terracottas, and ambers create psychological warmth. In hospitality settings, they slow the pace — guests linger, conversations deepen. In African light, warm tones connect interiors to the landscape outside." },
-              { title: "Cool tones expand perception", body: "Greys, blues, and soft greens push walls back visually. In compact urban apartments or commercial lobbies, they create the illusion of volume and calm. Paired with natural light, they shift beautifully through the day." },
-              { title: "Neutrals are never neutral", body: "A cream is not just a cream. Ivory Veil leans warm and golden. Cloud Milk carries a cooler, almost silvery undertone. The right neutral doesn't disappear — it amplifies every other design decision in the room." },
-              { title: "Metallics add a fourth dimension", body: "Surfaces that shimmer don't just reflect light — they respond to it. A bronze wall in morning sun looks entirely different at dusk. Metallic finishes add time as a design element, making spaces feel alive." },
+              { title: "Not a paint. A mineral surface.", body: "Microcement colours come from oxide pigments mixed into a cementitious binder. The result is a surface with natural variation — subtle tonal shifts, soft mottling, and depth that flat paint cannot achieve." },
+              { title: "Light changes everything", body: "The same microcement tone looks different in morning sun, artificial light, and at dusk. This is not a defect — it's the defining quality of a living mineral surface. Every specification should consider the light conditions of the space." },
+              { title: "Texture amplifies tone", body: "A smooth trowel finish reads lighter and more refined. A textured application appears darker and more rustic. The same pigment can produce remarkably different atmospheres depending on the applicator's technique." },
+              { title: "Natural variation is the point", body: "Unlike factory-consistent paint, microcement embraces controlled variation. Trowel marks, mineral aggregates, and overlapping layers create a surface that feels handmade, alive, and connected to craft." },
             ].map((item, i) => (
               <motion.div
                 key={i}
@@ -399,11 +466,11 @@ const ColoursPage = () => {
             </h2>
             <p className="font-body text-sm text-secondary-foreground max-w-[520px] mx-auto leading-[1.85] mb-8" style={{ fontWeight: 300 }}>
               We develop custom colour formulations for architects and designers.
-              Share a reference — a fabric swatch, a Pantone code, a photograph of Kenyan soil at sunset — and we'll match it.
+              Share a reference — a fabric swatch, a Pantone code, a photograph — and we'll match it.
             </p>
             <a
               href="#contact"
-              className="inline-flex bg-primary text-primary-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-gold-light transition-colors"
+              className="inline-flex bg-primary text-primary-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-[hsl(var(--gold-light))] transition-colors"
             >
               Request a custom colour →
             </a>
@@ -411,14 +478,27 @@ const ColoursPage = () => {
         </div>
       </section>
 
-      {/* Detail modal */}
+      {/* Immersive preview modal */}
       <AnimatePresence>
-        {selected && <ColourDetail colour={selected} onClose={() => setSelected(null)} />}
+        {selected && (
+          <ColourPreview
+            colour={selected}
+            onClose={() => setSelected(null)}
+            onSelect={(c) => setSelected(c)}
+          />
+        )}
       </AnimatePresence>
 
       <Footer />
     </div>
   );
 };
+
+function isLightColor(hex: string): boolean {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return (r * 299 + g * 587 + b * 114) / 1000 > 150;
+}
 
 export default ColoursPage;
