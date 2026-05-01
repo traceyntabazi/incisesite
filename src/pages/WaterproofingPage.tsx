@@ -60,7 +60,7 @@ const liquidMembranes: WPProduct[] = [
   },
 ];
 
-const bituminous: WPProduct[] = [
+const bituminous: { type: string; name: string; desc: string; suitableFor: string[] }[] = [
   {
     type: "Bituminous · Liquid Applied",
     name: "INCISE BituShield",
