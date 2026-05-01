@@ -15,6 +15,7 @@ import LocationsPage from "./pages/LocationsPage";
 import NotFound from "./pages/NotFound";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import SealersPage from "./pages/SealersPage";
+import WaterproofingPage from "./pages/WaterproofingPage";
 
 const queryClient = new QueryClient();
 
