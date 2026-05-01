@@ -55,9 +55,9 @@ const ProductDropdown = ({ scrolled }: { scrolled: boolean }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-1/2 -translate-x-1/2 mt-4 bg-card border border-border shadow-lg min-w-[420px] z-50"
+            className="absolute top-full left-1/2 -translate-x-1/2 mt-4 bg-card border border-border shadow-lg min-w-[620px] z-50"
           >
-            <div className="grid grid-cols-2 gap-0">
+            <div className="grid grid-cols-3 gap-0">
               {/* Wall Products */}
               <div className="p-5 border-r border-border">
                 <p className="text-[0.55rem] tracking-[0.24em] uppercase font-body text-primary mb-3" style={{ fontWeight: 500 }}>
@@ -79,7 +79,7 @@ const ProductDropdown = ({ scrolled }: { scrolled: boolean }) => {
               </div>
 
               {/* Floor Products */}
-              <div className="p-5">
+              <div className="p-5 border-r border-border">
                 <p className="text-[0.55rem] tracking-[0.24em] uppercase font-body text-primary mb-3" style={{ fontWeight: 500 }}>
                   Floor Products
                 </p>
@@ -93,6 +93,26 @@ const ProductDropdown = ({ scrolled }: { scrolled: boolean }) => {
                       style={{ fontWeight: 400 }}
                     >
                       INCISE {p.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Technical Solutions */}
+              <div className="p-5">
+                <p className="text-[0.55rem] tracking-[0.24em] uppercase font-body text-primary mb-3" style={{ fontWeight: 500 }}>
+                  Technical Solutions
+                </p>
+                <div className="flex flex-col gap-1">
+                  {technicalSolutions.map((t) => (
+                    <Link
+                      key={t.href}
+                      to={t.href}
+                      onClick={() => setOpen(false)}
+                      className="text-[0.72rem] font-body text-muted-foreground hover:text-foreground hover:bg-secondary px-2 py-1.5 transition-colors"
+                      style={{ fontWeight: 400 }}
+                    >
+                      {t.name}
                     </Link>
                   ))}
                 </div>
