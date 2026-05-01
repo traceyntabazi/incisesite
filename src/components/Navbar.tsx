@@ -262,6 +262,17 @@ const Navbar = () => {
                                 INCISE {p.name}
                               </Link>
                             ))}
+                            <p className="text-[0.55rem] tracking-[0.24em] uppercase font-body text-primary mb-1 mt-3" style={{ fontWeight: 500 }}>Technical Solutions</p>
+                            {technicalSolutions.map((t) => (
+                              <Link
+                                key={t.href}
+                                to={t.href}
+                                onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}
+                                className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors py-1"
+                              >
+                                {t.name}
+                              </Link>
+                            ))}
                             <Link
                               to="/products"
                               onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}
