@@ -11,10 +11,14 @@ const navLinks = [
   { label: "Colours", href: "/colours" },
   { label: "Gallery", href: "/gallery" },
   { label: "Projects", href: "/#projects" },
-  { label: "Sealers", href: "/sealers" },
   { label: "Technical", href: "/technical" },
   { label: "Academy", href: "/academy" },
   { label: "Locations", href: "/locations" },
+];
+
+const technicalSolutions = [
+  { name: "Sealers & Protection", href: "/sealers" },
+  { name: "Waterproofing", href: "/waterproofing" },
 ];
 
 const ProductDropdown = ({ scrolled }: { scrolled: boolean }) => {
