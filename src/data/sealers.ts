@@ -118,6 +118,35 @@ export const sealers: SealerData[] = [
     applications: ["Floors", "Walls", "Decorative Concrete", "Microcement", "Outdoor Surfaces", "High-Traffic Zones"],
     img: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80",
   },
+  {
+    id: "strong",
+    slug: "strong",
+    badge: "DENSIFIER",
+    context: "SURFACE PROTECTION · LITHIUM–SODIUM CONCRETE DENSIFIER & HARDENER",
+    name: "Strong",
+    tagline: "Penetrating chemistry. Permanent hardness.",
+    description: [
+      "INCISE Strong is a penetrating lithium–sodium concrete densifier and surface hardener designed to strengthen concrete floors, cement screeds, and decorative microcement coatings. It chemically reacts with free calcium hydroxide in cementitious substrates to form additional calcium silicate hydrate (C-S-H), improving surface hardness, durability, and abrasion resistance.",
+      "Widely specified for concrete floor densification, industrial floor strengthening, decorative microcement systems, and as a substrate preparation step prior to sealing — building permanent strength into the substrate itself.",
+    ],
+    finish: "Clear penetrating treatment",
+    packaging: ["5L containers", "20L containers"],
+    coverage: "5–8 m² per litre (depending on substrate porosity)",
+    curing: [
+      "Reacts chemically within the substrate",
+      "Allow 24 hours before sealing or topcoats",
+      "Keep surface damp during application for best penetration",
+    ],
+    applications: [
+      "Concrete Densifier",
+      "Concrete Surface Hardener",
+      "Microcement Densifier",
+      "Cement Screed Hardening",
+      "Industrial Floor Strengthening",
+      "Substrate Preparation",
+    ],
+    img: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=800&q=80",
+  },
 ];
 
 export const getSealerBySlug = (slug: string) => sealers.find((s) => s.slug === slug);
