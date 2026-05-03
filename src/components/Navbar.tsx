@@ -280,16 +280,30 @@ const Navbar = () => {
                               </Link>
                             ))}
                             <p className="text-[0.55rem] tracking-[0.24em] uppercase font-body text-primary mb-1 mt-3" style={{ fontWeight: 500 }}>Technical Solutions</p>
-                            {technicalSolutions.map((t) => (
+                            <Link
+                              to="/sealers"
+                              onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}
+                              className="text-sm font-body text-foreground hover:text-primary transition-colors py-1"
+                            >
+                              Sealers & Protection
+                            </Link>
+                            {sealers.map((s) => (
                               <Link
-                                key={t.href}
-                                to={t.href}
+                                key={s.slug}
+                                to={`/sealers/${s.slug}`}
                                 onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}
-                                className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors py-1"
+                                className="text-xs font-body text-muted-foreground hover:text-foreground transition-colors py-0.5"
                               >
-                                {t.name}
+                                INCISE {s.name}
                               </Link>
                             ))}
+                            <Link
+                              to="/waterproofing"
+                              onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}
+                              className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors py-1 mt-2"
+                            >
+                              Waterproofing
+                            </Link>
                             <Link
                               to="/products"
                               onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}
