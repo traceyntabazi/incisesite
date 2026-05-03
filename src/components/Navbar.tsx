@@ -4,6 +4,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoDark from "@/assets/logo-dark.png";
 import { wallProducts, floorProducts } from "@/data/products";
+import { sealers } from "@/data/sealers";
 
 const navLinks = [
   { label: "About", href: "/about" },
