@@ -105,17 +105,33 @@ const ProductDropdown = ({ scrolled }: { scrolled: boolean }) => {
                   Technical Solutions
                 </p>
                 <div className="flex flex-col gap-1">
-                  {technicalSolutions.map((t) => (
+                  <Link
+                    to="/sealers"
+                    onClick={() => setOpen(false)}
+                    className="text-[0.72rem] font-body text-foreground hover:bg-secondary px-2 py-1.5 transition-colors"
+                    style={{ fontWeight: 500 }}
+                  >
+                    Sealers & Protection
+                  </Link>
+                  {sealers.map((s) => (
                     <Link
-                      key={t.href}
-                      to={t.href}
+                      key={s.slug}
+                      to={`/sealers/${s.slug}`}
                       onClick={() => setOpen(false)}
-                      className="text-[0.72rem] font-body text-muted-foreground hover:text-foreground hover:bg-secondary px-2 py-1.5 transition-colors"
+                      className="text-[0.7rem] font-body text-muted-foreground hover:text-foreground hover:bg-secondary pl-5 pr-2 py-1 transition-colors"
                       style={{ fontWeight: 400 }}
                     >
-                      {t.name}
+                      INCISE {s.name}
                     </Link>
                   ))}
+                  <Link
+                    to="/waterproofing"
+                    onClick={() => setOpen(false)}
+                    className="text-[0.72rem] font-body text-muted-foreground hover:text-foreground hover:bg-secondary px-2 py-1.5 transition-colors mt-2"
+                    style={{ fontWeight: 400 }}
+                  >
+                    Waterproofing
+                  </Link>
                 </div>
               </div>
             </div>
