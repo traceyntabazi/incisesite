@@ -96,6 +96,28 @@ export const sealers: SealerData[] = [
     applications: ["Premium Residential Floors", "Boutique Retail", "Hotel Interiors", "Showroom Floors", "Demanding Wall Surfaces"],
     img: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80",
   },
+  {
+    id: "rapid-seal",
+    slug: "rapid-seal",
+    badge: "RAPID CURE",
+    context: "SURFACE PROTECTION · 2K POLYURETHANE PROTECTIVE SEALER",
+    name: "Rapid Seal",
+    tagline: "Fast cure. High durability. Uncompromising protection.",
+    description: [
+      "INCISE Rapid Seal is a high-performance two-component polyurethane protective sealer engineered for surfaces that need to be back in service quickly without compromising on long-term durability. Rapid curing technology delivers a tough, clear protective finish with excellent abrasion, UV, and chemical resistance.",
+      "Suitable for both interior and exterior use across floors, walls, decorative concrete, microcement, and outdoor surfaces — wherever high mechanical strength and a refined satin or gloss finish are required.",
+    ],
+    finish: "Satin / Gloss (as specified)",
+    packaging: ["Component A – Resin: 5L", "Component B – Hardener: 2.5L"],
+    coverage: "8–12 m² per litre per coat (depending on substrate)",
+    curing: [
+      "Rapid curing technology — back in service faster",
+      "Full cure: 5–7 days",
+      "Protect from water during initial cure",
+    ],
+    applications: ["Floors", "Walls", "Decorative Concrete", "Microcement", "Outdoor Surfaces", "High-Traffic Zones"],
+    img: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80",
+  },
 ];
 
 export const getSealerBySlug = (slug: string) => sealers.find((s) => s.slug === slug);
