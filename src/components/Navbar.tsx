@@ -4,6 +4,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoDark from "@/assets/logo-dark.png";
 import { wallProducts, floorProducts } from "@/data/products";
+import { sealers } from "@/data/sealers";
 
 const navLinks = [
   { label: "About", href: "/about" },
@@ -104,17 +105,33 @@ const ProductDropdown = ({ scrolled }: { scrolled: boolean }) => {
                   Technical Solutions
                 </p>
                 <div className="flex flex-col gap-1">
-                  {technicalSolutions.map((t) => (
+                  <Link
+                    to="/sealers"
+                    onClick={() => setOpen(false)}
+                    className="text-[0.72rem] font-body text-foreground hover:bg-secondary px-2 py-1.5 transition-colors"
+                    style={{ fontWeight: 500 }}
+                  >
+                    Sealers & Protection
+                  </Link>
+                  {sealers.map((s) => (
                     <Link
-                      key={t.href}
-                      to={t.href}
+                      key={s.slug}
+                      to={`/sealers/${s.slug}`}
                       onClick={() => setOpen(false)}
-                      className="text-[0.72rem] font-body text-muted-foreground hover:text-foreground hover:bg-secondary px-2 py-1.5 transition-colors"
+                      className="text-[0.7rem] font-body text-muted-foreground hover:text-foreground hover:bg-secondary pl-5 pr-2 py-1 transition-colors"
                       style={{ fontWeight: 400 }}
                     >
-                      {t.name}
+                      INCISE {s.name}
                     </Link>
                   ))}
+                  <Link
+                    to="/waterproofing"
+                    onClick={() => setOpen(false)}
+                    className="text-[0.72rem] font-body text-muted-foreground hover:text-foreground hover:bg-secondary px-2 py-1.5 transition-colors mt-2"
+                    style={{ fontWeight: 400 }}
+                  >
+                    Waterproofing
+                  </Link>
                 </div>
               </div>
             </div>
@@ -263,16 +280,30 @@ const Navbar = () => {
                               </Link>
                             ))}
                             <p className="text-[0.55rem] tracking-[0.24em] uppercase font-body text-primary mb-1 mt-3" style={{ fontWeight: 500 }}>Technical Solutions</p>
-                            {technicalSolutions.map((t) => (
+                            <Link
+                              to="/sealers"
+                              onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}
+                              className="text-sm font-body text-foreground hover:text-primary transition-colors py-1"
+                            >
+                              Sealers & Protection
+                            </Link>
+                            {sealers.map((s) => (
                               <Link
-                                key={t.href}
-                                to={t.href}
+                                key={s.slug}
+                                to={`/sealers/${s.slug}`}
                                 onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}
-                                className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors py-1"
+                                className="text-xs font-body text-muted-foreground hover:text-foreground transition-colors py-0.5"
                               >
-                                {t.name}
+                                INCISE {s.name}
                               </Link>
                             ))}
+                            <Link
+                              to="/waterproofing"
+                              onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}
+                              className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors py-1 mt-2"
+                            >
+                              Waterproofing
+                            </Link>
                             <Link
                               to="/products"
                               onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}
