@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, Eye, Layers, Sparkles, Palette } from "lucide-react";
+import { Search, X, Eye, Layers, Sparkles, Palette, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
@@ -12,6 +13,23 @@ import {
   type ColourRange,
   type MicroColour,
 } from "@/components/colours/ColourData";
+
+/* ── Product palette lens — colour as the identity of each product ── */
+const PRODUCT_LENSES: {
+  name: string;
+  slug: string;
+  tag: string;
+  tagline: string;
+  blurb: string;
+  toneCount: string;
+}[] = [
+  { name: "Microtopping",   slug: "microtopping",   tag: "SIGNATURE · WALLS & FLOORS",     tagline: "The defining palette.",          blurb: "The broadest INCISE range — bone whites through sandstones, oxides, concretes, to near-black charcoals. Trowelled at 1–3mm, every tone reads as mineral, never as paint.",                 toneCount: "80+ tones" },
+  { name: "Microtek",       slug: "microtek",       tag: "HIGH-PERFORMANCE FLOORS",        tagline: "Industrial pigments, refined.",   blurb: "Heavier-bodied colours engineered for commercial floors. The same mineral honesty as Microtopping, built to take traffic without losing its quiet.",                                  toneCount: "40+ tones" },
+  { name: "Wallcrete",      slug: "wallcrete",      tag: "CONCRETE CHARACTER · WALLS",      tagline: "Raw concrete, controlled.",       blurb: "A palette built around the language of poured concrete — cool greys, warm stones, and architectural earth tones with visible trowel character.",                                       toneCount: "25 tones" },
+  { name: "Cemwash",        slug: "cemwash",        tag: "MINERAL WASH · WALLS",            tagline: "Lime-wash warmth.",               blurb: "Soft, breathable mineral tones inspired by traditional lime finishes. Walls that shift with morning, midday, and dusk light. Improves with age.",                                     toneCount: "20 tones" },
+  { name: "Patio",          slug: "patio",          tag: "OUTDOOR FLOORS · TROPICS-RATED",  tagline: "Built for the equatorial sun.",   blurb: "UV-stable outdoor tones — sands, terracottas, and natural stone shades formulated to hold their colour under East Africa's sun and seasonal rains.",                                  toneCount: "18 tones" },
+  { name: "Color Hardener", slug: "color-hardener", tag: "INDUSTRIAL FLOORS · DRY-SHAKE",   tagline: "Pigment fused into concrete.",    blurb: "Permanent integral colour pressed into fresh concrete. Earth-driven shades — rust, ochre, oxide, slate — that become part of the slab itself.",                                       toneCount: "40+ tones" },
+];
 
 /* ── Textured swatch card ── */
 const ColourCard = ({ colour, onClick }: { colour: MicroColour; onClick: () => void }) => (
@@ -129,6 +147,13 @@ const ColoursPage = () => {
   const [selected, setSelected] = useState<MicroColour | null>(null);
   const [search, setSearch] = useState("");
   const [activeRange, setActiveRange] = useState<ColourRange | "All">("All");
+  const [activeLens, setActiveLens] = useState<string>(PRODUCT_LENSES[0].name);
+
+  const lensColours = useMemo(
+    () => microColours.filter((c) => c.products.includes(activeLens)),
+    [activeLens]
+  );
+  const activeLensMeta = PRODUCT_LENSES.find((p) => p.name === activeLens)!;
 
   const filteredByRange = useMemo(() => {
     let base = microColours;
@@ -230,6 +255,172 @@ const ColoursPage = () => {
               <p className="font-body text-sm text-secondary-foreground leading-[1.85]" style={{ fontWeight: 300 }}>{item.text}</p>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* ── Colour by Product — the heart of the page ── */}
+      <section className="section-padding bg-background border-t border-border/40">
+        <div className="max-w-[1400px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-12 md:mb-16 max-w-[760px]"
+          >
+            <p className="label-text mb-4">COLOUR BY PRODUCT</p>
+            <h2 className="font-display text-3xl md:text-5xl text-foreground mb-5" style={{ fontWeight: 300 }}>
+              Each product has its own <span className="italic text-gradient-gold">voice.</span>
+            </h2>
+            <p className="font-body text-sm md:text-base text-secondary-foreground leading-[1.9]" style={{ fontWeight: 300 }}>
+              Microcement, lime wash, dry-shake hardener — each system carries pigment differently. 
+              The same ochre on a Cemwash wall does not read the same on a Microtek floor. Choose a 
+              product to see the palette built for it.
+            </p>
+          </motion.div>
+
+          {/* Product lens selector — large, editorial tabs */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-[2px] mb-12">
+            {PRODUCT_LENSES.map((p) => {
+              const swatchColours = microColours.filter((c) => c.products.includes(p.name)).slice(0, 5);
+              const isActive = activeLens === p.name;
+              return (
+                <button
+                  key={p.name}
+                  onClick={() => setActiveLens(p.name)}
+                  className={`group relative text-left p-4 transition-all duration-300 ${
+                    isActive
+                      ? "bg-foreground text-background"
+                      : "bg-secondary text-foreground hover:bg-muted"
+                  }`}
+                >
+                  {/* mini swatch strip */}
+                  <div className="flex h-2 gap-[1px] mb-3">
+                    {swatchColours.map((c) => (
+                      <div key={c.id} className="flex-1" style={{ backgroundColor: c.hex }} />
+                    ))}
+                  </div>
+                  <p className={`font-display text-lg md:text-xl mb-0.5 ${isActive ? "" : "text-foreground"}`} style={{ fontWeight: 400 }}>
+                    {p.name}
+                  </p>
+                  <p className={`text-[0.55rem] tracking-[0.16em] uppercase font-body ${isActive ? "opacity-70" : "text-muted-foreground"}`}>
+                    {p.toneCount}
+                  </p>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active lens display */}
+          <motion.div
+            key={activeLens}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="grid lg:grid-cols-[340px_1fr] gap-10 lg:gap-16"
+          >
+            {/* Left: meta column */}
+            <div className="lg:sticky lg:top-24 lg:self-start">
+              <p className="label-text mb-3">{activeLensMeta.tag}</p>
+              <h3 className="font-display text-3xl md:text-4xl text-foreground mb-1" style={{ fontWeight: 300 }}>
+                {activeLensMeta.name}
+              </h3>
+              <p className="font-display text-base text-primary italic mb-5" style={{ fontWeight: 300 }}>
+                {activeLensMeta.tagline}
+              </p>
+              <p className="font-body text-sm text-secondary-foreground leading-[1.9] mb-6" style={{ fontWeight: 300 }}>
+                {activeLensMeta.blurb}
+              </p>
+
+              <div className="flex flex-col gap-3 mb-8">
+                <div className="flex items-baseline justify-between border-b border-border/50 pb-2">
+                  <span className="text-[0.6rem] uppercase tracking-[0.18em] text-muted-foreground font-body">Available tones</span>
+                  <span className="font-display text-2xl text-foreground" style={{ fontWeight: 300 }}>{lensColours.length}</span>
+                </div>
+                <div className="flex items-baseline justify-between border-b border-border/50 pb-2">
+                  <span className="text-[0.6rem] uppercase tracking-[0.18em] text-muted-foreground font-body">Custom matching</span>
+                  <span className="text-[0.7rem] font-body text-foreground">Available</span>
+                </div>
+              </div>
+
+              <Link
+                to={`/products/${activeLensMeta.slug}`}
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-[hsl(var(--gold-light))] transition-colors"
+              >
+                Explore {activeLensMeta.name} <ArrowRight size={14} />
+              </Link>
+            </div>
+
+            {/* Right: dense colour grid for this product */}
+            <div>
+              {lensColours.length === 0 ? (
+                <p className="font-body text-sm text-muted-foreground py-12">
+                  No colours mapped yet for this product.
+                </p>
+              ) : (
+                <>
+                  {/* Hero swatch — first/signature tone */}
+                  <button
+                    onClick={() => setSelected(lensColours[0])}
+                    className="block w-full aspect-[16/7] mb-[2px] relative overflow-hidden group"
+                    style={{ backgroundColor: lensColours[0].hex }}
+                  >
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E")`,
+                        backgroundSize: "512px 512px",
+                      }}
+                    />
+                    <div className="absolute bottom-6 left-6">
+                      <p className="text-[0.55rem] tracking-[0.22em] uppercase font-body mb-1"
+                        style={{ color: isLightColor(lensColours[0].hex) ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.55)" }}
+                      >
+                        SIGNATURE TONE · {activeLensMeta.name}
+                      </p>
+                      <p className="font-display text-2xl md:text-3xl"
+                        style={{ fontWeight: 300, color: isLightColor(lensColours[0].hex) ? "rgba(0,0,0,0.75)" : "rgba(255,255,255,0.9)" }}
+                      >
+                        {lensColours[0].name}
+                      </p>
+                    </div>
+                  </button>
+
+                  {/* Dense grid */}
+                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-[2px]">
+                    {lensColours.slice(1).map((c) => (
+                      <button
+                        key={c.id}
+                        onClick={() => setSelected(c)}
+                        className="group relative aspect-square overflow-hidden text-left"
+                        style={{ backgroundColor: c.hex }}
+                      >
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E")`,
+                          }}
+                        />
+                        <div className="absolute inset-x-0 bottom-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          style={{ background: isLightColor(c.hex) ? "linear-gradient(transparent, rgba(255,255,255,0.6))" : "linear-gradient(transparent, rgba(0,0,0,0.5))" }}
+                        >
+                          <p className="text-[0.6rem] font-body truncate"
+                            style={{ color: isLightColor(c.hex) ? "rgba(0,0,0,0.75)" : "rgba(255,255,255,0.9)", fontWeight: 400 }}
+                          >
+                            {c.name}
+                          </p>
+                          <p className="text-[0.5rem] font-body tracking-[0.1em]"
+                            style={{ color: isLightColor(c.hex) ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.6)" }}
+                          >
+                            {c.hex.toUpperCase()}
+                          </p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </motion.div>
         </div>
       </section>
 
