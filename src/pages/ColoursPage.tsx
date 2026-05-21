@@ -147,6 +147,13 @@ const ColoursPage = () => {
   const [selected, setSelected] = useState<MicroColour | null>(null);
   const [search, setSearch] = useState("");
   const [activeRange, setActiveRange] = useState<ColourRange | "All">("All");
+  const [activeLens, setActiveLens] = useState<string>(PRODUCT_LENSES[0].name);
+
+  const lensColours = useMemo(
+    () => microColours.filter((c) => c.products.includes(activeLens)),
+    [activeLens]
+  );
+  const activeLensMeta = PRODUCT_LENSES.find((p) => p.name === activeLens)!;
 
   const filteredByRange = useMemo(() => {
     let base = microColours;
