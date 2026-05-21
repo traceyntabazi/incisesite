@@ -236,8 +236,157 @@ const ColoursPage = () => {
         </div>
       </section>
 
-      {/* ── Philosophy strip ── */}
-      <section className="section-padding bg-secondary">
+      {/* ── Intro to product collections ── */}
+      <section className="section-padding pb-10 bg-background border-b border-border/40">
+        <div className="max-w-[1400px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-[760px]"
+          >
+            <p className="label-text mb-4">COLOUR COLLECTIONS</p>
+            <h2 className="font-display text-3xl md:text-5xl text-foreground mb-5" style={{ fontWeight: 300 }}>
+              Every product has its own <span className="italic text-gradient-gold">palette.</span>
+            </h2>
+            <p className="font-body text-sm md:text-base text-secondary-foreground leading-[1.9]" style={{ fontWeight: 300 }}>
+              Microcement, lime wash, dry-shake hardener — each system carries pigment differently.
+              The same ochre on a Cemwash wall does not read the same on a Microtek floor.
+              Below, each INCISE product is presented as its own colour collection.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Stacked product collections — the heart of the page ── */}
+      {PRODUCT_LENSES.map((lens, idx) => {
+        const colours = microColours.filter((c) => c.products.includes(lens.name));
+        if (colours.length === 0) return null;
+        const signature = colours[0];
+        const isAlt = idx % 2 === 1;
+        return (
+          <section
+            key={lens.name}
+            className={`section-padding ${isAlt ? "bg-secondary" : "bg-background"} border-b border-border/40`}
+          >
+            <div className="max-w-[1400px] mx-auto">
+              {/* Collection header */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                className="grid lg:grid-cols-[1fr_360px] gap-8 lg:gap-16 items-end mb-10"
+              >
+                <div>
+                  <p className="label-text mb-4">COLLECTION {String(idx + 1).padStart(2, "0")} · {lens.tag}</p>
+                  <h3 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-3" style={{ fontWeight: 300 }}>
+                    {lens.name}
+                  </h3>
+                  <p className="font-display text-lg md:text-2xl text-primary italic" style={{ fontWeight: 300 }}>
+                    {lens.tagline}
+                  </p>
+                </div>
+                <div>
+                  <p className="font-body text-sm text-secondary-foreground leading-[1.9] mb-5" style={{ fontWeight: 300 }}>
+                    {lens.blurb}
+                  </p>
+                  <div className="flex items-baseline gap-6">
+                    <div>
+                      <p className="text-[0.55rem] tracking-[0.18em] uppercase text-muted-foreground font-body">Tones</p>
+                      <p className="font-display text-2xl text-foreground" style={{ fontWeight: 300 }}>{colours.length}</p>
+                    </div>
+                    <div>
+                      <p className="text-[0.55rem] tracking-[0.18em] uppercase text-muted-foreground font-body">Range</p>
+                      <p className="font-display text-2xl text-foreground" style={{ fontWeight: 300 }}>{lens.toneCount}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Signature swatch — full bleed */}
+              <motion.button
+                onClick={() => setSelected(signature)}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="block w-full aspect-[21/8] md:aspect-[21/6] relative overflow-hidden group mb-[2px]"
+                style={{ backgroundColor: signature.hex }}
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E")`,
+                    backgroundSize: "512px 512px",
+                  }}
+                />
+                <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10">
+                  <p className="text-[0.55rem] tracking-[0.22em] uppercase font-body mb-2"
+                    style={{ color: isLightColor(signature.hex) ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.55)" }}
+                  >
+                    SIGNATURE TONE
+                  </p>
+                  <p className="font-display text-3xl md:text-5xl"
+                    style={{ fontWeight: 300, color: isLightColor(signature.hex) ? "rgba(0,0,0,0.8)" : "rgba(255,255,255,0.92)" }}
+                  >
+                    {signature.name}
+                  </p>
+                  <p className="text-[0.6rem] tracking-[0.16em] uppercase font-body mt-1"
+                    style={{ color: isLightColor(signature.hex) ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.6)" }}
+                  >
+                    {signature.hex.toUpperCase()}
+                  </p>
+                </div>
+              </motion.button>
+
+              {/* Dense palette grid */}
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-[2px] mb-8">
+                {colours.slice(1).map((c) => (
+                  <button
+                    key={c.id}
+                    onClick={() => setSelected(c)}
+                    className="group relative aspect-square overflow-hidden text-left"
+                    style={{ backgroundColor: c.hex }}
+                    title={`${c.name} — ${c.hex}`}
+                  >
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E")`,
+                      }}
+                    />
+                    <div className="absolute inset-x-0 bottom-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{ background: isLightColor(c.hex) ? "linear-gradient(transparent, rgba(255,255,255,0.65))" : "linear-gradient(transparent, rgba(0,0,0,0.55))" }}
+                    >
+                      <p className="text-[0.6rem] font-body truncate"
+                        style={{ color: isLightColor(c.hex) ? "rgba(0,0,0,0.8)" : "rgba(255,255,255,0.92)", fontWeight: 400 }}
+                      >
+                        {c.name}
+                      </p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {/* Footer link */}
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-border/40">
+                <p className="font-body text-xs text-muted-foreground" style={{ fontWeight: 300 }}>
+                  All {lens.name} tones available with matte, satin, or gloss sealer options.
+                </p>
+                <Link
+                  to={`/products/${lens.slug}`}
+                  className="inline-flex items-center gap-2 text-[0.65rem] tracking-[0.18em] uppercase font-body text-foreground hover:text-primary transition-colors"
+                >
+                  Explore {lens.name} <ArrowRight size={12} />
+                </Link>
+              </div>
+            </div>
+          </section>
+        );
+      })}
+
+      {/* ── Philosophy strip — moved below collections ── */}
+      <section className="section-padding bg-background">
         <div className="max-w-[1400px] mx-auto grid md:grid-cols-3 gap-10 md:gap-16">
           {[
             { icon: Eye, title: "Perception", text: "Microcement is not flat colour. Natural mineral pigments create depth, variation, and organic movement across every surface — no two square metres are identical." },
@@ -255,172 +404,6 @@ const ColoursPage = () => {
               <p className="font-body text-sm text-secondary-foreground leading-[1.85]" style={{ fontWeight: 300 }}>{item.text}</p>
             </motion.div>
           ))}
-        </div>
-      </section>
-
-      {/* ── Colour by Product — the heart of the page ── */}
-      <section className="section-padding bg-background border-t border-border/40">
-        <div className="max-w-[1400px] mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-12 md:mb-16 max-w-[760px]"
-          >
-            <p className="label-text mb-4">COLOUR BY PRODUCT</p>
-            <h2 className="font-display text-3xl md:text-5xl text-foreground mb-5" style={{ fontWeight: 300 }}>
-              Each product has its own <span className="italic text-gradient-gold">voice.</span>
-            </h2>
-            <p className="font-body text-sm md:text-base text-secondary-foreground leading-[1.9]" style={{ fontWeight: 300 }}>
-              Microcement, lime wash, dry-shake hardener — each system carries pigment differently. 
-              The same ochre on a Cemwash wall does not read the same on a Microtek floor. Choose a 
-              product to see the palette built for it.
-            </p>
-          </motion.div>
-
-          {/* Product lens selector — large, editorial tabs */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-[2px] mb-12">
-            {PRODUCT_LENSES.map((p) => {
-              const swatchColours = microColours.filter((c) => c.products.includes(p.name)).slice(0, 5);
-              const isActive = activeLens === p.name;
-              return (
-                <button
-                  key={p.name}
-                  onClick={() => setActiveLens(p.name)}
-                  className={`group relative text-left p-4 transition-all duration-300 ${
-                    isActive
-                      ? "bg-foreground text-background"
-                      : "bg-secondary text-foreground hover:bg-muted"
-                  }`}
-                >
-                  {/* mini swatch strip */}
-                  <div className="flex h-2 gap-[1px] mb-3">
-                    {swatchColours.map((c) => (
-                      <div key={c.id} className="flex-1" style={{ backgroundColor: c.hex }} />
-                    ))}
-                  </div>
-                  <p className={`font-display text-lg md:text-xl mb-0.5 ${isActive ? "" : "text-foreground"}`} style={{ fontWeight: 400 }}>
-                    {p.name}
-                  </p>
-                  <p className={`text-[0.55rem] tracking-[0.16em] uppercase font-body ${isActive ? "opacity-70" : "text-muted-foreground"}`}>
-                    {p.toneCount}
-                  </p>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Active lens display */}
-          <motion.div
-            key={activeLens}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="grid lg:grid-cols-[340px_1fr] gap-10 lg:gap-16"
-          >
-            {/* Left: meta column */}
-            <div className="lg:sticky lg:top-24 lg:self-start">
-              <p className="label-text mb-3">{activeLensMeta.tag}</p>
-              <h3 className="font-display text-3xl md:text-4xl text-foreground mb-1" style={{ fontWeight: 300 }}>
-                {activeLensMeta.name}
-              </h3>
-              <p className="font-display text-base text-primary italic mb-5" style={{ fontWeight: 300 }}>
-                {activeLensMeta.tagline}
-              </p>
-              <p className="font-body text-sm text-secondary-foreground leading-[1.9] mb-6" style={{ fontWeight: 300 }}>
-                {activeLensMeta.blurb}
-              </p>
-
-              <div className="flex flex-col gap-3 mb-8">
-                <div className="flex items-baseline justify-between border-b border-border/50 pb-2">
-                  <span className="text-[0.6rem] uppercase tracking-[0.18em] text-muted-foreground font-body">Available tones</span>
-                  <span className="font-display text-2xl text-foreground" style={{ fontWeight: 300 }}>{lensColours.length}</span>
-                </div>
-                <div className="flex items-baseline justify-between border-b border-border/50 pb-2">
-                  <span className="text-[0.6rem] uppercase tracking-[0.18em] text-muted-foreground font-body">Custom matching</span>
-                  <span className="text-[0.7rem] font-body text-foreground">Available</span>
-                </div>
-              </div>
-
-              <Link
-                to={`/products/${activeLensMeta.slug}`}
-                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-[hsl(var(--gold-light))] transition-colors"
-              >
-                Explore {activeLensMeta.name} <ArrowRight size={14} />
-              </Link>
-            </div>
-
-            {/* Right: dense colour grid for this product */}
-            <div>
-              {lensColours.length === 0 ? (
-                <p className="font-body text-sm text-muted-foreground py-12">
-                  No colours mapped yet for this product.
-                </p>
-              ) : (
-                <>
-                  {/* Hero swatch — first/signature tone */}
-                  <button
-                    onClick={() => setSelected(lensColours[0])}
-                    className="block w-full aspect-[16/7] mb-[2px] relative overflow-hidden group"
-                    style={{ backgroundColor: lensColours[0].hex }}
-                  >
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E")`,
-                        backgroundSize: "512px 512px",
-                      }}
-                    />
-                    <div className="absolute bottom-6 left-6">
-                      <p className="text-[0.55rem] tracking-[0.22em] uppercase font-body mb-1"
-                        style={{ color: isLightColor(lensColours[0].hex) ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.55)" }}
-                      >
-                        SIGNATURE TONE · {activeLensMeta.name}
-                      </p>
-                      <p className="font-display text-2xl md:text-3xl"
-                        style={{ fontWeight: 300, color: isLightColor(lensColours[0].hex) ? "rgba(0,0,0,0.75)" : "rgba(255,255,255,0.9)" }}
-                      >
-                        {lensColours[0].name}
-                      </p>
-                    </div>
-                  </button>
-
-                  {/* Dense grid */}
-                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-[2px]">
-                    {lensColours.slice(1).map((c) => (
-                      <button
-                        key={c.id}
-                        onClick={() => setSelected(c)}
-                        className="group relative aspect-square overflow-hidden text-left"
-                        style={{ backgroundColor: c.hex }}
-                      >
-                        <div
-                          className="absolute inset-0"
-                          style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E")`,
-                          }}
-                        />
-                        <div className="absolute inset-x-0 bottom-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                          style={{ background: isLightColor(c.hex) ? "linear-gradient(transparent, rgba(255,255,255,0.6))" : "linear-gradient(transparent, rgba(0,0,0,0.5))" }}
-                        >
-                          <p className="text-[0.6rem] font-body truncate"
-                            style={{ color: isLightColor(c.hex) ? "rgba(0,0,0,0.75)" : "rgba(255,255,255,0.9)", fontWeight: 400 }}
-                          >
-                            {c.name}
-                          </p>
-                          <p className="text-[0.5rem] font-body tracking-[0.1em]"
-                            style={{ color: isLightColor(c.hex) ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.6)" }}
-                          >
-                            {c.hex.toUpperCase()}
-                          </p>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
-          </motion.div>
         </div>
       </section>
 
