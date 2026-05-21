@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, Eye, Layers, Sparkles, Palette } from "lucide-react";
+import { Search, X, Eye, Layers, Sparkles, Palette, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
@@ -12,6 +13,23 @@ import {
   type ColourRange,
   type MicroColour,
 } from "@/components/colours/ColourData";
+
+/* ── Product palette lens — colour as the identity of each product ── */
+const PRODUCT_LENSES: {
+  name: string;
+  slug: string;
+  tag: string;
+  tagline: string;
+  blurb: string;
+  toneCount: string;
+}[] = [
+  { name: "Microtopping",   slug: "microtopping",   tag: "SIGNATURE · WALLS & FLOORS",     tagline: "The defining palette.",          blurb: "The broadest INCISE range — bone whites through sandstones, oxides, concretes, to near-black charcoals. Trowelled at 1–3mm, every tone reads as mineral, never as paint.",                 toneCount: "80+ tones" },
+  { name: "Microtek",       slug: "microtek",       tag: "HIGH-PERFORMANCE FLOORS",        tagline: "Industrial pigments, refined.",   blurb: "Heavier-bodied colours engineered for commercial floors. The same mineral honesty as Microtopping, built to take traffic without losing its quiet.",                                  toneCount: "40+ tones" },
+  { name: "Wallcrete",      slug: "wallcrete",      tag: "CONCRETE CHARACTER · WALLS",      tagline: "Raw concrete, controlled.",       blurb: "A palette built around the language of poured concrete — cool greys, warm stones, and architectural earth tones with visible trowel character.",                                       toneCount: "25 tones" },
+  { name: "Cemwash",        slug: "cemwash",        tag: "MINERAL WASH · WALLS",            tagline: "Lime-wash warmth.",               blurb: "Soft, breathable mineral tones inspired by traditional lime finishes. Walls that shift with morning, midday, and dusk light. Improves with age.",                                     toneCount: "20 tones" },
+  { name: "Patio",          slug: "patio",          tag: "OUTDOOR FLOORS · TROPICS-RATED",  tagline: "Built for the equatorial sun.",   blurb: "UV-stable outdoor tones — sands, terracottas, and natural stone shades formulated to hold their colour under East Africa's sun and seasonal rains.",                                  toneCount: "18 tones" },
+  { name: "Color Hardener", slug: "color-hardener", tag: "INDUSTRIAL FLOORS · DRY-SHAKE",   tagline: "Pigment fused into concrete.",    blurb: "Permanent integral colour pressed into fresh concrete. Earth-driven shades — rust, ochre, oxide, slate — that become part of the slab itself.",                                       toneCount: "40+ tones" },
+];
 
 /* ── Textured swatch card ── */
 const ColourCard = ({ colour, onClick }: { colour: MicroColour; onClick: () => void }) => (
