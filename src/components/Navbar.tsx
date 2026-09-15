@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logoDark from "@/assets/logo-dark.png";
 import { wallProducts, floorProducts } from "@/data/products";
 import { sealers } from "@/data/sealers";
