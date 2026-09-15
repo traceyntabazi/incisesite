@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logoDark from "@/assets/logo-dark.png";
 import { wallProducts, floorProducts } from "@/data/products";
 import { sealers } from "@/data/sealers";
@@ -152,12 +152,17 @@ const ProductDropdown = ({ scrolled }: { scrolled: boolean }) => {
 };
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const { pathname } = useLocation();
+  // The transparent (light-text) navbar only works over the dark homepage hero.
+  // On every other page, always use the solid bar so the menu is always visible.
+  const scrolled = pathname !== "/" || scrollY > 50;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrollY(window.scrollY);
+    onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
