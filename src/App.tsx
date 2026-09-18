@@ -10,6 +10,7 @@ import ProductsPage from "./pages/ProductsPage";
 import AcademyPage from "./pages/AcademyPage";
 import TechnicalPage from "./pages/TechnicalPage";
 import CommunityPage from "./pages/CommunityPage";
+import ApplicatorsPage from "./pages/ApplicatorsPage";
 import ColoursPage from "./pages/ColoursPage";
 import LocationsPage from "./pages/LocationsPage";
 import NotFound from "./pages/NotFound";
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/waterproofing" element={<WaterproofingPage />} />
           <Route path="/academy" element={<AcademyPage />} />
           <Route path="/academy/community" element={<CommunityPage />} />
+          <Route path="/academy/applicators" element={<ApplicatorsPage />} />
           <Route path="/technical" element={<TechnicalPage />} />
           <Route path="/colours" element={<ColoursPage />} />
           <Route path="/locations" element={<LocationsPage />} />
