@@ -298,6 +298,7 @@ const AcademyPage = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a href="#intakes" className="bg-primary text-primary-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:bg-gold-light transition-colors">APPLY FOR CERTIFICATION →</a>
+              <Link to="/academy/applicators" className="border border-secondary-foreground/30 text-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:border-foreground transition-colors">VIEW LICENSED APPLICATORS →</Link>
               <a href="#" className="border border-secondary-foreground/30 text-foreground px-8 py-3.5 text-[0.68rem] tracking-[0.16em] uppercase font-body hover:border-foreground transition-colors">VIEW TECHNICAL LIBRARY →</a>
             </div>
           </motion.div>
