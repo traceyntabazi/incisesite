@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { MicroTextureCanvas } from "@/components/colours/MicroTexture";
 import ColourPreview from "@/components/colours/ColourPreview";
 import {
   microColours,
@@ -33,34 +35,26 @@ const PRODUCT_LENSES: {
 
 /* ── Textured swatch card ── */
 const ColourCard = ({ colour, onClick }: { colour: MicroColour; onClick: () => void }) => (
-  <motion.button
-    onClick={onClick}
-    className="group text-left"
+  <motion.div
     initial={{ opacity: 0, y: 16 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: -8 }}
     layout
   >
+  <Button
+    variant="ghost"
+    onClick={onClick}
+    aria-label={`View ${colour.name}`}
+    className="group block h-auto p-0 text-left w-full whitespace-normal hover:bg-transparent"
+  >
     <div
-      className="aspect-square w-full mb-3 border border-border/30 transition-all duration-300 group-hover:shadow-lg group-hover:scale-[1.02] relative overflow-hidden"
+      className="aspect-[339/162] w-full mb-3 border border-border/30 transition-all duration-300 group-hover:shadow-lg group-hover:scale-[1.02] relative overflow-hidden"
       style={{ backgroundColor: colour.hex }}
     >
       {/* SVG noise overlay for microcement texture */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E")`,
-          backgroundSize: "256px 256px",
-        }}
-      />
+      <MicroTextureCanvas hex={colour.hex} className="absolute inset-0 w-full h-full object-cover" />
       {/* Subtle trowel-mark overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.012 0.04' numOctaves='2' seed='5'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E")`,
-          backgroundSize: "400px 400px",
-        }}
-      />
+      
       {/* Hover eye icon */}
       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="w-10 h-10 rounded-full flex items-center justify-center"
@@ -78,7 +72,8 @@ const ColourCard = ({ colour, onClick }: { colour: MicroColour; onClick: () => v
     <p className="text-[0.58rem] tracking-[0.12em] uppercase text-muted-foreground font-body mt-0.5">
       {colour.hex.toUpperCase()}
     </p>
-  </motion.button>
+  </Button>
+  </motion.div>
 );
 
 /* ── Range section with its colours ── */
@@ -122,18 +117,13 @@ const RangeSection = ({
             style={{ backgroundColor: c.hex }}
             onClick={() => onSelect(c)}
           >
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E")`,
-              }}
-            />
+            <MicroTextureCanvas hex={c.hex} className="absolute inset-0 w-full h-full object-cover" />
           </div>
         ))}
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-x-3 gap-y-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-[3px] gap-y-6">
         {colours.map((c) => (
           <ColourCard key={c.id} colour={c} onClick={() => onSelect(c)} />
         ))}
@@ -153,7 +143,7 @@ const ColoursPage = () => {
     () => microColours.filter((c) => c.products.includes(activeLens)),
     [activeLens]
   );
-  const activeLensMeta = PRODUCT_LENSES.find((p) => p.name === activeLens)!;
+  const activeLensMeta = PRODUCT_LENSES.find((p) => p.name === activeLens) ?? PRODUCT_LENSES[0];
 
   const filteredByRange = useMemo(() => {
     let base = microColours;
@@ -196,8 +186,7 @@ const ColoursPage = () => {
             >
               <p className="label-text mb-5">THE ART OF HARMONY</p>
               <h1 className="font-display text-4xl md:text-6xl lg:text-7xl mb-6" style={{ fontWeight: 300, color: "hsl(var(--warm-white))" }}>
-                Material, texture <br className="hidden md:block" />
-                <span className="italic text-gradient-gold">& colour.</span>
+                INCISE <span className="italic text-gradient-gold">Colour Chart.</span>
               </h1>
               <p className="font-body text-sm md:text-base max-w-[640px] leading-[1.95] opacity-70" style={{ fontWeight: 300, color: "hsl(var(--warm-white))" }}>
                 Microcement colours are not like paint. They are mineral pigments bound in cement — 
@@ -222,13 +211,7 @@ const ColoursPage = () => {
                   onClick={() => setSelected(c)}
                   title={c.name}
                 >
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E")`,
-                      backgroundSize: "256px 256px",
-                    }}
-                  />
+                  <MicroTextureCanvas hex={c.hex} className="absolute inset-0 w-full h-full object-cover" />
                 </div>
               ))}
             </motion.div>
@@ -313,13 +296,7 @@ const ColoursPage = () => {
                 className="block w-full aspect-[21/8] md:aspect-[21/6] relative overflow-hidden group mb-[2px]"
                 style={{ backgroundColor: signature.hex }}
               >
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E")`,
-                    backgroundSize: "512px 512px",
-                  }}
-                />
+                <MicroTextureCanvas hex={signature.hex} className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10">
                   <p className="text-[0.55rem] tracking-[0.22em] uppercase font-body mb-2"
                     style={{ color: isLightColor(signature.hex) ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.55)" }}
@@ -339,32 +316,10 @@ const ColoursPage = () => {
                 </div>
               </motion.button>
 
-              {/* Dense palette grid */}
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-[2px] mb-8">
+              {/* Named photographic swatches, visible on touch screens too. */}
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-x-[3px] gap-y-6 mt-6 mb-8">
                 {colours.slice(1).map((c) => (
-                  <button
-                    key={c.id}
-                    onClick={() => setSelected(c)}
-                    className="group relative aspect-square overflow-hidden text-left"
-                    style={{ backgroundColor: c.hex }}
-                    title={`${c.name} — ${c.hex}`}
-                  >
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E")`,
-                      }}
-                    />
-                    <div className="absolute inset-x-0 bottom-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ background: isLightColor(c.hex) ? "linear-gradient(transparent, rgba(255,255,255,0.65))" : "linear-gradient(transparent, rgba(0,0,0,0.55))" }}
-                    >
-                      <p className="text-[0.6rem] font-body truncate"
-                        style={{ color: isLightColor(c.hex) ? "rgba(0,0,0,0.8)" : "rgba(255,255,255,0.92)", fontWeight: 400 }}
-                      >
-                        {c.name}
-                      </p>
-                    </div>
-                  </button>
+                  <ColourCard key={c.id} colour={c} onClick={() => setSelected(c)} />
                 ))}
               </div>
 
@@ -448,12 +403,7 @@ const ColoursPage = () => {
                       onClick={() => setSelected(c)}
                       title={`${c.name} — ${c.hex}`}
                     >
-                      <div
-                        className="absolute inset-0"
-                        style={{
-                          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E")`,
-                        }}
-                      />
+                      <MicroTextureCanvas hex={c.hex} className="absolute inset-0 w-full h-full object-cover" />
                       <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[0.45rem] font-body opacity-0 group-hover:opacity-70 transition-opacity whitespace-nowrap"
                         style={{ color: isLightColor(c.hex) ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.6)" }}
                       >
@@ -483,7 +433,7 @@ const ColoursPage = () => {
           >
             <p className="label-text mb-4">EXPLORE THE PALETTE</p>
             <h2 className="font-display text-3xl md:text-5xl text-foreground" style={{ fontWeight: 300 }}>
-              Click any colour to <span className="italic text-gradient-gold">feel the surface.</span>
+              The complete <span className="italic text-gradient-gold">mineral palette.</span>
             </h2>
           </motion.div>
 
@@ -565,7 +515,7 @@ const ColoursPage = () => {
                   </p>
                 </motion.div>
               )}
-              <motion.div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-x-3 gap-y-6" layout>
+              <motion.div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-[3px] gap-y-6" layout>
                 <AnimatePresence mode="popLayout">
                   {flatFiltered.map((c) => (
                     <ColourCard key={c.id} colour={c} onClick={() => setSelected(c)} />
